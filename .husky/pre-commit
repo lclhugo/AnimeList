@@ -1,0 +1,50 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+
+echo '     / ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \
+    |  /~~\                                                                       /~~\  |
+    |\ \   |                                                                     |   / /|
+    | \   /|          🏗️👷 Styling your project before committing 👷🏗️           |\   / |
+    |  ~~  |                                                                     |  ~~  |
+    |      |  🔎 Checking for ESLint error and trying to fix them if any... 🤖   |      |
+    |      |                                                                     |      |
+    |      |           Please be patient, this may take a while... ⌛            |      |
+    |      |                                                                     |      |
+    |      |                                                                     |      |
+     \     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|     /
+      \   /                                                                       \   /
+       ~~~                                                                         ~~~
+'
+
+# Check ESLint Standards
+yarn lint ||
+(
+    echo '    +----------------------------------------------------+
+    |    🔨 We found errors during ESLint check 🔨       |
+    |                                                    |
+    |      Trying to automatically fix the problems...   |
+    +----------------------------------------------------+'
+    yarn lint:fix ||
+    (
+         echo '        +------------------------------------------------------------------------+
+        |            ❌ Could not automatically fix the changes ❌               |
+        |                                                                        |
+        |      Fix the errors, run yarn lint, add changes and try commit again.  |
+        +------------------------------------------------------------------------+'
+        false;
+    )
+    echo '    *************************************************************************
+    *                                                                       *
+    *   🟢 Errors were succesfully solved automatically.... 👾🧑‍🔧         *
+    *                                                                       *
+    *************************************************************************'
+)
+
+echo '    +---------------------------------------------+
+    |    🎉 Committing this now.... ✨🚀🏄‍♂️🍻   |
+    +---------------------------------------------+
+
+    '
+
+yarn lint-staged
