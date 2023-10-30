@@ -26,7 +26,6 @@
         <label for="password" class="block mb-1 text-sm font-medium text-base-content">
           Password
         </label>
-
         <input
           id="password"
           v-model="password"
@@ -34,6 +33,20 @@
           name="password"
           class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
           placeholder="Password"
+          required
+        />
+      </div>
+      <div class="mb-6">
+        <label for="confirmPassword" class="block mb-1 text-sm font-medium text-base-content">
+          Confirm Password
+        </label>
+        <input
+          id="confirmPassword"
+          v-model="confirmPassword"
+          type="password"
+          name="confirmPassword"
+          class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
+          placeholder="Confirm Password"
           required
         />
       </div>
@@ -50,11 +63,19 @@
 
 <script setup lang="ts">
 const client = useSupabaseClient();
-
 const email = ref('');
 const password = ref('');
+const confirmPassword = ref('');
 const errorMsg = ref('');
 const successMsg = ref('');
+
+watchEffect(() => {
+  if (password.value !== confirmPassword.value) {
+    errorMsg.value = 'Passwords do not match';
+  } else {
+    errorMsg.value = '';
+  }
+});
 
 const signUp = async () => {
   const { error } = await client.auth.signUp({
@@ -65,7 +86,7 @@ const signUp = async () => {
     const { message } = error;
     errorMsg.value = message;
   } else {
-    successMsg.value = 'Check your email for the confirmation link.';
+    successMsg.value = 'Success! You can now log in.';
   }
 };
 </script>
