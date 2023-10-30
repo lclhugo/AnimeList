@@ -62,7 +62,8 @@ const signUp = async () => {
     password: password.value,
   });
   if (error) {
-    errorMsg.value = error.message;
+    const { message } = error;
+    errorMsg.value = message;
   } else {
     successMsg.value = 'Check your email for the confirmation link.';
   }

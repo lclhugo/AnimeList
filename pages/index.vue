@@ -26,7 +26,6 @@ export default {
         const session = client.auth.getSession();
 
         console.log(session.access_token);
-        // Set the JWT token in the Authorization header
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
         const response = await axios.get('https://localhost:7081/api/anime/test');
