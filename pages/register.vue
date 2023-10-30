@@ -22,6 +22,23 @@
           required
         />
       </div>
+      <div class="mb-4">
+        <label
+          for="username"
+          class="block mb-1 text-sm font-medium text-gradient-to-r from-primary to-secondary"
+        >
+          Username
+        </label>
+        <input
+          id="username"
+          v-model="username"
+          type="text"
+          name="username"
+          class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
+          placeholder="Username"
+          required
+        />
+      </div>
       <div class="mb-6">
         <label for="password" class="block mb-1 text-sm font-medium text-base-content">
           Password
@@ -63,7 +80,9 @@
 
 <script setup lang="ts">
 const client = useSupabaseClient();
+const supabase = useSupabaseUser();
 const email = ref('');
+const username = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const errorMsg = ref('');
@@ -78,15 +97,24 @@ watchEffect(() => {
 });
 
 const signUp = async () => {
-  const { error } = await client.auth.signUp({
+  if (password.value !== confirmPassword.value) {
+    errorMsg.value = 'Passwords do not match';
+    return;
+  }
+  const { data, error } = await client.auth.signUp({
     email: email.value,
     password: password.value,
+    options: {
+      data: {
+        username: username.value,
+      },
+    },
   });
   if (error) {
     const { message } = error;
     errorMsg.value = message;
   } else {
-    successMsg.value = 'Success! You can now log in.';
+    successMsg.value = 'You are now registered! You can now login.';
   }
 };
 </script>
