@@ -1,9 +1,6 @@
 <template>
   <CenterLayout>
-    <form
-      class="w-full max-w-md p-8 rounded-lg shadow-md bg-primary-content"
-      @submit.prevent="signUp"
-    >
+    <form class="w-10/12 max-w-md p-8 rounded-lg shadow-md bg-base-300" @submit.prevent="signUp">
       <h2 class="mb-4 text-2xl font-semibold text-center">Sign Up</h2>
       <div class="mb-4">
         <label

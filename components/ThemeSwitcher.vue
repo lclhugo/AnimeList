@@ -38,13 +38,13 @@ const isNightTheme = ref(true);
 
 const toggleTheme = () => {
   isNightTheme.value = !isNightTheme.value;
-  document.documentElement.setAttribute('data-theme', isNightTheme.value ? 'night' : 'winter');
-  localStorage.setItem('theme', isNightTheme.value ? 'night' : 'winter');
+  document.documentElement.setAttribute('data-theme', isNightTheme.value ? 'dark' : 'light');
+  localStorage.setItem('theme', isNightTheme.value ? 'dark' : 'light');
 };
 
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme');
-  isNightTheme.value = savedTheme === 'night' || savedTheme === null;
-  document.documentElement.setAttribute('data-theme', isNightTheme.value ? 'night' : 'winter');
+  isNightTheme.value = savedTheme === 'dark' || savedTheme === null;
+  document.documentElement.setAttribute('data-theme', isNightTheme.value ? 'dark' : 'light');
 });
 </script>
