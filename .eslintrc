@@ -38,7 +38,7 @@
         "usePrettierrc": false
       }
     ],
-    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "off",
     "vue/multi-word-component-names": 0,
     "vue/no-v-for-template-key": 0,
     "array-bracket-spacing": ["error", "never"],
@@ -108,7 +108,7 @@
         "allowSamePrecedence": true
       }
     ],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "no-unused-expressions": "off",
     "no-underscore-dangle": "error",
     "no-unneeded-ternary": "error",

@@ -30,6 +30,7 @@ const client = useSupabaseClient();
 console.log(user.value);
 async function logout() {
   await client.auth.signOut();
+
   router.push('/');
 }
 </script>

@@ -1,11 +1,11 @@
 <template>
   <div
-    v-motion-pop-visible-once
-    class="w-44 sm:w-56 hover:shadow-xl hover:translate-x-1 hover:translate-y-1 transition-all duration-300 ease-in-out"
+    v-motion-fade-visible
+    class="transition-all duration-300 ease-in-out w-44 sm:w-56 hover:shadow-xl hover:translate-x-1 hover:translate-y-1"
   >
     <NuxtLink :to="'/anime/' + id">
       <figure>
-        <img :src="image" class="w-44 xl:w-56 mb-2 h-60 xl:h-80 rounded-lg object-cover" />
+        <img :src="image" class="object-cover mb-2 rounded-lg w-44 xl:w-56 h-60 xl:h-80" />
       </figure>
       <div>
         <h3 class="text-sm font-semibold">{{ name }}</h3>
