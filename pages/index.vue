@@ -5,7 +5,7 @@
     >
       Welcome to AnimeList!
     </h1>
-    <p class="mb-8 text-lg">A website where you can organize your anime watch lists!</p>
+    <p class="mb-8 text-lg">A platform for managing and arranging your anime watchlists!</p>
     <router-link to="/coucou" class="btn btn-active btn-accent">Get Started</router-link>
     <button class="btn btn-active btn-accent" @click="sendRequest()">Send Request</button>
   </div>

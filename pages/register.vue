@@ -79,8 +79,11 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['redirect-if-auth'],
+});
+
 const client = useSupabaseClient();
-const supabase = useSupabaseUser();
 const email = ref('');
 const username = ref('');
 const password = ref('');

@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: ['auth'],
+  middleware: ['redirect-if-not-auth'],
 });
 
 const user = useSupabaseUser();

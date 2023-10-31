@@ -40,6 +40,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['redirect-if-auth'],
+});
+
 const client = useSupabaseClient();
 const router = useRouter();
 
