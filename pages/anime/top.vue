@@ -38,7 +38,7 @@ const fetchData = async (page: number) => {
     } = response;
     animes.value = data;
     displayedAnimes.value = data;
-    totalPages.value = pagination.last_visible_page; // Set the total number of pages
+    totalPages.value = pagination.last_visible_page;
 
     console.log('data', data);
   } catch (error) {
