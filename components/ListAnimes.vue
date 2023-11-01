@@ -47,7 +47,6 @@ const totalPages = ref(1);
 
 const fetchData = async (page: number) => {
   try {
-    // Use the 'url' prop to fetch data from the specified URL
     const response = await axios.get(`${url}?page=${page}`);
     const { data } = response;
     animes.value = data.data;

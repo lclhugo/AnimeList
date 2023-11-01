@@ -2,16 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+*, option {
     font-family:
       'Nunito',
-      sans sérif;
+      sans sérif !important;
   }
 
 .min-h-screen80 {
     min-height: 80vh;
   }
 
-  .card.image-full:before {
-    display: none;
-  }
+.card.image-full:before {
+  display: none;
+}
+

@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-const apiUrl = 'https://api.jikan.moe/v4/top/anime'; // Specify the API URL here
+const apiUrl = 'https://api.jikan.moe/v4/top/anime';
 </script>
