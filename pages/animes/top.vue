@@ -16,7 +16,7 @@
         <AnimeCard
           v-for="anime in displayedAnimes"
           :id="anime.mal_id"
-          :key="anime.mal_id"
+          :key="anime.rank"
           :name="anime.title"
           :image="anime.images.jpg.large_image_url"
         />

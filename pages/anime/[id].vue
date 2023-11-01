@@ -26,7 +26,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const { data } = await axios.get(`https://localhost:7081/api/anime/${route.params.id}`);
+        const { data } = await axios.get(`https://api.jikan.moe/v4/anime/${route.params.id}`);
         animeData.value = data;
       } catch (error) {
         console.error('Error fetching data:', error);

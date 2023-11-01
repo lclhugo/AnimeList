@@ -1,5 +1,9 @@
 <template>
-  <footer class="p-10 border-t-2 footer footer-center bg-base-100 border-neutral">
+  <footer
+    v-motion-slide-visible-bottom
+    :delay="200"
+    class="p-10 border-t-2 footer footer-center bg-base-100 border-neutral"
+  >
     <aside>
       <svg
         width="50"

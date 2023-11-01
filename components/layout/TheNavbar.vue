@@ -28,22 +28,22 @@
         >
           <div class="text-sm sm:flex-grow">
             <NuxtLink
-              to="/"
+              to="/anime/top"
               class="block mt-4 mr-4 no-underline sm:inline-block sm:mt-0 text-teal-lighter hover:text-white"
             >
-              Docs
+              Top
             </NuxtLink>
             <NuxtLink
-              to="/"
+              to="/anime/search"
               class="block mt-4 mr-4 no-underline sm:inline-block sm:mt-0 text-teal-lighter hover:text-white"
             >
-              Examples
+              Search
             </NuxtLink>
             <NuxtLink
-              to="/"
+              to="/anime/current-season"
               class="block mt-4 no-underline sm:inline-block sm:mt-0 text-teal-lighter hover:text-white"
             >
-              Blog
+              CurrentSeason
             </NuxtLink>
           </div>
         </div>
