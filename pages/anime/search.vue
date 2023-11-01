@@ -1,11 +1,7 @@
 <template>
   <div>
     <h1>Anime Search</h1>
-    <input
-      v-model="query"
-      placeholder="Search Anime"
-      class="w-full max-w-xs input input-bordered input-accent"
-    />
+    <input v-model="query" placeholder="Search Anime" />
     <div class="container px-4 mx-auto my-8 sm:x-auto">
       <div v-if="animes.length === 0">No data was found</div>
       <div v-else>

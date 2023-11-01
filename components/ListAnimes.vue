@@ -2,23 +2,14 @@
   <div class="container px-4 mx-auto my-8 sm:x-auto">
     <div v-if="animes.length === 0">No data was found</div>
     <div v-else>
-      <h1 class="mb-8 text-4xl font-bold">Top Rated Animes</h1>
-      <div class="flex justify-between mb-4">
-        <div class="mx-auto join">
-          <button class="join-item btn" :disabled="currentPage === 1" @click="prevPage">«</button>
-          <button class="join-item btn">Page {{ currentPage }}</button>
-          <button class="join-item btn" :disabled="currentPage === totalPages" @click="nextPage">
-            »
-          </button>
-        </div>
-      </div>
+      <h1 class="mb-8 text-4xl font-bold">{{ title }}</h1>
       <div class="flex flex-wrap justify-center w-11/12 gap-2 mx-auto md:gap-0 md:justify-around">
         <AnimeCard
           v-for="anime in displayedAnimes"
           :id="anime.mal_id"
-          :key="anime.rank"
+          :key="anime.mal_id"
           :name="anime.title"
-          :image="anime.images.jpg.large_image_url"
+          :image="anime.images.jpg.image_url"
         />
       </div>
       <div class="flex justify-between my-8">
@@ -35,8 +26,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
 import axios from 'axios';
+
+const { url, title } = defineProps({
+  url: {
+    type: String,
+    default: 'https://api.jikan.moe/v3/top/anime',
+  },
+  title: {
+    type: String,
+    default: 'Top Anime',
+  },
+});
 
 const displayedAnimes = ref([]);
 const animes = ref([]);
@@ -45,16 +47,13 @@ const totalPages = ref(1);
 
 const fetchData = async (page: number) => {
   try {
-    const response = await axios.get(`https://api.jikan.moe/v4/top/anime?page=${page}`);
-    const {
-      data: { pagination, data },
-    } = response;
-    animes.value = data;
-    displayedAnimes.value = data;
-    // eslint-disable-next-line prefer-destructuring
-    totalPages.value = pagination.last_visible_page;
-
-    console.log('data', data);
+    // Use the 'url' prop to fetch data from the specified URL
+    const response = await axios.get(`${url}?page=${page}`);
+    const { data } = response;
+    animes.value = data.data;
+    displayedAnimes.value = data.data;
+    totalPages.value = data.pagination.last_visible_page;
+    console.log('data', data.data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }
