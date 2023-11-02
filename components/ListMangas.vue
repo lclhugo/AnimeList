@@ -1,15 +1,15 @@
 <template>
   <NuxtLayout>
-    <div v-if="animes.length === 0">No data was found</div>
+    <div v-if="mangas.length === 0">No data was found</div>
     <div v-else>
       <h1 class="mb-8 text-4xl font-bold">{{ title }}</h1>
       <div class="flex flex-wrap justify-center w-11/12 gap-2 mx-auto md:gap-0 md:justify-around">
-        <AnimeCard
-          v-for="anime in displayedAnimes"
-          :id="anime.mal_id"
-          :key="anime.mal_id"
-          :name="anime.title"
-          :image="anime.images.jpg.large_image_url"
+        <mangaCard
+          v-for="manga in displayedMangas"
+          :id="manga.mal_id"
+          :key="manga.mal_id"
+          :name="manga.title"
+          :image="manga.images.jpg.large_image_url"
         />
       </div>
       <div class="flex justify-between my-8">
@@ -36,16 +36,16 @@ definePageMeta({
 const { url, title } = defineProps({
   url: {
     type: String,
-    default: 'https://api.jikan.moe/v4/top/anime',
+    default: 'https://api.jikan.moe/v4/top/manga',
   },
   title: {
     type: String,
-    default: 'Top Anime',
+    default: 'Top manga',
   },
 });
 
-const displayedAnimes = ref([]);
-const animes = ref([]);
+const displayedMangas = ref([]);
+const mangas = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 
@@ -53,8 +53,8 @@ const fetchData = async (page: number) => {
   try {
     const response = await axios.get(`${url}?page=${page}`);
     const { data } = response;
-    animes.value = data.data;
-    displayedAnimes.value = data.data;
+    mangas.value = data.data;
+    displayedMangas.value = data.data;
     totalPages.value = data.pagination.last_visible_page;
     console.log('data', data.data);
   } catch (error) {
