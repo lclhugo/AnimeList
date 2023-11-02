@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-4 mx-auto my-8 sm:x-auto">
+  <NuxtLayout>
     <div v-if="animes.length === 0">No data was found</div>
     <div v-else>
       <h1 class="mb-8 text-4xl font-bold">{{ title }}</h1>
@@ -9,7 +9,7 @@
           :id="anime.mal_id"
           :key="anime.mal_id"
           :name="anime.title"
-          :image="anime.images.jpg.image_url"
+          :image="anime.images.jpg.large_image_url"
         />
       </div>
       <div class="flex justify-between my-8">
@@ -22,12 +22,16 @@
         </div>
       </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+
+definePageMeta({
+  layout: 'base',
+});
 
 const { url, title } = defineProps({
   url: {
