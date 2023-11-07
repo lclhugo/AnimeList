@@ -11,6 +11,7 @@ module.exports = {
       fontFamily: {
         display: ['Nunito'],
         body: ['Nunito'],
+        titles: ['Figtree'],
       },
     },
   },

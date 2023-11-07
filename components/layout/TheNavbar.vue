@@ -1,91 +1,12 @@
-<!-- <template>
-  <header>
-    <div id="app" class="font-sans antialiased">
-      <nav class="flex flex-wrap items-center justify-between p-6 bg-teal">
-        <div class="flex items-center mr-6 flex-no-shrink">
-          <NuxtLink to="/" class="text-xl font-semibold tracking-tight normal-case btn btn-ghost">
-            AnimeList
-          </NuxtLink>
-        </div>
-        <div class="block sm:hidden">
-          <button
-            class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
-            @click="toggle"
-          >
-            <svg
-              class="w-3 h-3 fill-current"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-        </div>
-        <div
-          :class="open ? 'block' : 'hidden'"
-          class="flex-grow w-full sm:flex sm:items-center sm:w-auto"
-        >
-          <div class="text-sm sm:flex-grow">
-            <NuxtLink
-              to="/anime/top"
-              class="block mt-4 mr-4 no-underline sm:inline-block sm:mt-0 text-teal-lighter hover:text-white"
-            >
-              Top
-            </NuxtLink>
-            <NuxtLink
-              to="/anime/search"
-              class="block mt-4 mr-4 no-underline sm:inline-block sm:mt-0 text-teal-lighter hover:text-white"
-            >
-              Search
-            </NuxtLink>
-            <NuxtLink
-              to="/anime/current-season"
-              class="block mt-4 no-underline sm:inline-block sm:mt-0 text-teal-lighter hover:text-white"
-            >
-              CurrentSeason
-            </NuxtLink>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
-</template> -->
-<!-- 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
-  setup: function () {
-    const open = ref(false);
-    const toggle = () => {
-      open.value = !open.value;
-    };
-    return {
-      open: open,
-      toggle: toggle,
-    };
-  },
-});
-</script> -->
-
 <template>
   <div class="navbar bg-base-100">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h8m-8 6h16"
+              fill="currentColor"
+              d="M4 18q-.425 0-.713-.288T3 17q0-.425.288-.713T4 16h11q.425 0 .713.288T16 17q0 .425-.288.713T15 18H4Zm14.9-1.7l-3.6-3.6q-.3-.3-.3-.7t.3-.7l3.6-3.6q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L17.4 12l2.9 2.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275ZM4 13q-.425 0-.713-.288T3 12q0-.425.288-.713T4 11h8q.425 0 .713.288T13 12q0 .425-.288.713T12 13H4Zm0-5q-.425 0-.713-.288T3 7q0-.425.288-.713T4 6h11q.425 0 .713.288T16 7q0 .425-.288.713T15 8H4Z"
             />
           </svg>
         </label>
@@ -94,40 +15,43 @@ export default defineComponent({
           class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <a>Parent</a>
+            <NuxtLink to="/">Anime</NuxtLink>
             <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
+              <li><NuxtLink to="/animes">Animes</NuxtLink></li>
+              <li><NuxtLink to="/anime/search">Search</NuxtLink></li>
+              <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
+              <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
             </ul>
           </li>
           <li>
-            <a>Parent</a>
+            <NuxtLink to="/">Manga</NuxtLink>
             <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
+              <li><NuxtLink to="/mangas">Mangas</NuxtLink></li>
+              <li><NuxtLink to="/manga/search">Search</NuxtLink></li>
+              <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
             </ul>
           </li>
           <li>
-            <a>Parent</a>
+            <NuxtLink to="/">Parent</NuxtLink>
             <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
+              <li><NuxtLink to="/">Submenu 1</NuxtLink></li>
+              <li><NuxtLink to="/">Submenu 2</NuxtLink></li>
             </ul>
           </li>
         </ul>
       </div>
-      <NuxtLink to="/" class="text-xl font-semibold tracking-tight normal-case btn btn-ghost">
-        AnimeList
-      </NuxtLink>
+      <HomeButton />
     </div>
     <div class="hidden navbar-center lg:flex">
-      <ul class="gap-8 px-1 menu menu-horizontal">
+      <ul class="gap-8 px-1 z-[1] menu menu-horizontal">
         <li tabindex="0">
           <details>
             <summary>Anime</summary>
             <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
+              <li><NuxtLink to="/animes">Animes</NuxtLink></li>
+              <li><NuxtLink to="/anime/search">Search</NuxtLink></li>
+              <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
+              <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
             </ul>
           </details>
         </li>
@@ -136,8 +60,9 @@ export default defineComponent({
           <details>
             <summary>Manga</summary>
             <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
+              <li><NuxtLink to="/mangas">Mangas</NuxtLink></li>
+              <li><NuxtLink to="/manga/search">Search</NuxtLink></li>
+              <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
             </ul>
           </details>
         </li>
@@ -145,8 +70,8 @@ export default defineComponent({
           <details>
             <summary>List</summary>
             <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
+              <li><NuxtLink to="/">Submenu 1</NuxtLink></li>
+              <li><NuxtLink to="/">Submenu 2</NuxtLink></li>
             </ul>
           </details>
         </li>
@@ -158,6 +83,4 @@ export default defineComponent({
   </div>
 </template>
 
-<script lang="ts">
-import type { ThemeSwitcher } from '#build/components';
-</script>
+<script lang="ts"></script>

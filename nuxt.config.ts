@@ -11,7 +11,8 @@ export default defineNuxtConfig({
   ssr: false,
   googleFonts: {
     families: {
-      Nunito: true,
+      Nunito: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      Figtree: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
     display: 'swap',
     prefetch: true,

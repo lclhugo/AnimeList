@@ -5,7 +5,7 @@
 *, option {
     font-family:
       'Nunito',
-      sans sérif !important;
+      sans sérif
   }
 
 .min-h-screen80 {
@@ -16,3 +16,6 @@
   display: none;
 }
 
+.title, .btn {
+  font-family: Figtree, sans-serif !important;
+}
