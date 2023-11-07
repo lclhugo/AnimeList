@@ -10,8 +10,13 @@
       >
         Welcome to AnimeList!
       </h1>
-      <p class="mb-8 text-lg">A platform for managing and arranging your anime and manga lists.</p>
-      <router-link to="/coucou" class="btn btn-primary">Get Started</router-link>
+      <p class="mb-8 text-lg">
+        A platform for managing and arranging your
+        <NuxtLink to="animes" class="text-primary">anime</NuxtLink>
+        and
+        <NuxtLink to="animes" class="text-primary">manga</NuxtLink>
+        lists.
+      </p>
     </div>
     <div v-if="user">
       <p>Welcome back! {{ user.email }}</p>
@@ -20,9 +25,9 @@
     <div v-else>
       <p>
         You are not logged in, please
-        <router-link to="/login" class="text-primary">login</router-link>
+        <router-link to="/login" class="underline text-primary">login</router-link>
         or
-        <router-link to="/register" class="text-primary">register</router-link>
+        <router-link to="/register" class="underline text-primary">register</router-link>
       </p>
     </div>
   </div>

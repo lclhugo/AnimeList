@@ -1,57 +1,48 @@
 <template>
   <CenterLayout>
-    <form class="w-10/12 max-w-md p-8 rounded-lg shadow-md bg-base-300" @submit.prevent="signUp">
+    <form
+      class="w-10/12 max-w-md p-8 rounded-lg shadow-md bg-neutral text-neutral-content"
+      @submit.prevent="signUp"
+    >
       <h2 class="mb-4 text-2xl font-semibold text-center">Sign Up</h2>
       <div class="mb-4">
-        <label
-          for="email"
-          class="block mb-1 text-sm font-medium text-gradient-to-r from-primary to-secondary"
-        >
-          Email
-        </label>
+        <label for="email" class="label-text-alt text-neutral-content">Email</label>
         <input
           id="email"
           v-model="email"
           type="email"
           name="email"
-          class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
+          class="w-full input input-bordered focus:input-primary text-base-content"
           placeholder="Email"
           required
         />
       </div>
       <div class="mb-4">
-        <label
-          for="username"
-          class="block mb-1 text-sm font-medium text-gradient-to-r from-primary to-secondary"
-        >
-          Username
-        </label>
+        <label for="username" class="label-text-alt text-neutral-content">Username</label>
         <input
           id="username"
           v-model="username"
           type="text"
           name="username"
-          class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
+          class="w-full input input-bordered focus:input-primary text-base-content"
           placeholder="Username"
           required
         />
       </div>
       <div class="mb-6">
-        <label for="password" class="block mb-1 text-sm font-medium text-base-content">
-          Password
-        </label>
+        <label for="password" class="label-text-alt text-neutral-content">Password</label>
         <input
           id="password"
           v-model="password"
           type="password"
           name="password"
-          class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
+          class="w-full input input-bordered focus:input-primary text-base-content"
           placeholder="Password"
           required
         />
       </div>
       <div class="mb-6">
-        <label for="confirmPassword" class="block mb-1 text-sm font-medium text-base-content">
+        <label for="confirmPassword" class="label-text-alt text-neutral-content">
           Confirm Password
         </label>
         <input
@@ -59,7 +50,7 @@
           v-model="confirmPassword"
           type="password"
           name="confirmPassword"
-          class="w-full px-3 py-2 border rounded-lg bg-base-100 focus:outline-none focus:ring focus:border-base-100-focus"
+          class="w-full input input-bordered focus:input-primary text-base-content"
           placeholder="Confirm Password"
           required
         />
