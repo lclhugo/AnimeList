@@ -11,10 +11,11 @@ module.exports = {
       fontFamily: {
         display: ['Nunito'],
         body: ['Nunito'],
+        titles: ['Figtree'],
       },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
     themes: ['dark', 'light'],
   },
