@@ -49,9 +49,12 @@
             ></path>
           </svg>
         </a>
+        <ThemeSwitcher />
       </div>
     </nav>
   </footer>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import type { ThemeSwitcher } from '#build/components';
+</script>
