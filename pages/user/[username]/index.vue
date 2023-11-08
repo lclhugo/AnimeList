@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
-const { username } = route.params;
+const {
+  params: { username },
+} = useRoute();
 </script>

@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-*, option {
+/* *, option {
     font-family:
       'Nunito',
       sans sérif
-  }
+  } */
 
 .min-h-screen80 {
     min-height: 80vh;

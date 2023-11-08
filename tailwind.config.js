@@ -13,6 +13,7 @@ module.exports = {
         body: ['Nunito'],
         titles: ['Figtree'],
       },
+      download: true,
     },
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
