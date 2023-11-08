@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100">
+  <div class="pt-4 mx-auto navbar bg-base-100 max-w-7xl">
     <div class="navbar-start">
       <div class="z-20 md:hidden drawer">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
@@ -28,7 +28,7 @@
             <li>
               <NuxtLink to="/">Anime</NuxtLink>
               <ul class="p-2">
-                <li><NuxtLink to="/anime/search">Search</NuxtLink></li>
+                <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
                 <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
               </ul>
@@ -36,7 +36,7 @@
             <li>
               <NuxtLink to="/">Manga</NuxtLink>
               <ul class="p-2">
-                <li><NuxtLink to="/manga/search">Search</NuxtLink></li>
+                <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
               </ul>
             </li>
@@ -62,10 +62,10 @@
         <label tabindex="0" class="btn btn-ghost">Anime</label>
         <ul
           tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
-          <li><NuxtLink to="/anime/search">Search Animes</NuxtLink></li>
-          <li><NuxtLink to="/anime/top">Top Rated Animes</NuxtLink></li>
+          <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
+          <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
           <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
         </ul>
       </div>
@@ -73,17 +73,17 @@
         <label tabindex="0" class="btn btn-ghost">manga</label>
         <ul
           tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
-          <li><NuxtLink to="/manga/search">Search Mangas</NuxtLink></li>
-          <li><NuxtLink to="/manga/top">Top Rated Mangas</NuxtLink></li>
+          <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
+          <li><NuxtLink to="/manga/top">TopRatings</NuxtLink></li>
         </ul>
       </div>
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost">Anime</label>
         <ul
           tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
           <li><NuxtLink to="/anime/search">Search</NuxtLink></li>
           <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
@@ -96,7 +96,7 @@
         <label tabindex="0" class="btn btn-ghost">{{ username }}</label>
         <ul
           tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
           <li>
             <NuxtLink :to="`/user/${username}`">Profile</NuxtLink>
@@ -113,10 +113,19 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 const user = useSupabaseUser();
 const router = useRouter();
 const client = useSupabaseClient();
-const username = user.value?.user_metadata?.username;
+const username = ref(user.value?.user_metadata?.username);
+
+watch(
+  user,
+  newUser => {
+    username.value = newUser?.user_metadata?.username;
+  },
+  { immediate: true },
+);
 
 async function logout() {
   await client.auth.signOut();

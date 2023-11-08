@@ -14,8 +14,8 @@
         </thead>
         <tbody>
           <tr v-for="anime in animeData" :key="anime.animeId" v-motion-fade-visible>
-            <td class="hidden md:block">
-              <NuxtLink :to="'/anime/' + anime.animeId">
+            <td class="hidden md:block hover:scale-110">
+              <NuxtLink v-if="anime.animeId" :to="'/anime/' + anime.animeId">
                 <div class="avatar">
                   <div class="w-12 h-12 lg:w-20 lg:h-20 mask mask-squircle">
                     <img :src="anime.animeInfo.image" alt="Anime Poster" />
@@ -28,7 +28,15 @@
             </td>
             <td>{{ anime.status.statusName }}</td>
             <td>{{ anime.animeInfo.type }}</td>
-            <td>{{ anime.watchedEpisodes }}/{{ anime.animeInfo.episodeCount }}</td>
+            <td>
+              {{ anime.watchedEpisodes }}/{{ anime.animeInfo.episodeCount }}
+              <br />
+              <progress
+                class="w-20 md:w-40 progress progress-primary"
+                :value="anime.watchedEpisodes"
+                :max="anime.animeInfo.episodeCount"
+              ></progress>
+            </td>
             <td>{{ anime.rating }}/10</td>
           </tr>
         </tbody>
