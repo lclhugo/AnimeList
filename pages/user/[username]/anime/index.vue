@@ -1,5 +1,6 @@
 <template>
   <div class="md:container md:mx-auto">
+    <h1 class="text-3xl font-bold text-center">{{ username }}'s' list</h1>
     <div
       class="flex flex-col items-center justify-center w-full h-32 md:flex-row md:justify-center"
     >
@@ -12,7 +13,7 @@
       </button>
       <button
         class="tab"
-        :class="{ 'tab-active': selectedCategory === 'Watching' }"
+        :class="{ 'tab-active': selectedCategory === 'Current' }"
         @click="filterAnime('Current')"
       >
         Watching
@@ -92,6 +93,7 @@ export default {
       selectedCategory: selectedCategory,
       filteredAnime: filteredAnime,
       filterAnime: filterAnime,
+      username: username,
     };
   },
 };

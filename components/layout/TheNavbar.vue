@@ -40,19 +40,24 @@
                 <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
               </ul>
             </li>
-            <li>
-              <NuxtLink to="/">Parent</NuxtLink>
+            <li v-if="user">
+              <NuxtLink :to="`/user/${username}`">{{ username }}</NuxtLink>
               <ul class="p-2">
-                <li><NuxtLink to="/">Submenu 1</NuxtLink></li>
-                <li><NuxtLink to="/">Submenu 2</NuxtLink></li>
+                <li>
+                  <NuxtLink :to="`/user/${username}`">Profile</NuxtLink>
+                </li>
+                <li><button class="" @click="logout">Logout</button></li>
               </ul>
+            </li>
+            <li v-else>
+              <NuxtLink to="/login">Login</NuxtLink>
             </li>
           </ul>
         </div>
       </div>
       <HomeButton />
     </div>
-    <div class="hidden gap-8 navbar-center lg:flex">
+    <div class="hidden gap-8 navbar-center md:flex">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost">Anime</label>
         <ul
@@ -87,7 +92,34 @@
       </div>
     </div>
     <div class="px-4 navbar-end">
+      <div v-if="user" class="hidden dropdown md:block">
+        <label tabindex="0" class="btn btn-ghost">{{ username }}</label>
+        <ul
+          tabindex="0"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56"
+        >
+          <li>
+            <NuxtLink :to="`/user/${username}`">Profile</NuxtLink>
+          </li>
+          <li>
+            <button @click="logout">Logout</button>
+          </li>
+        </ul>
+      </div>
+      <NuxtLink v-else to="/login" class="btn btn-ghost btn-sm">Login</NuxtLink>
       <ThemeSwitcher />
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const user = useSupabaseUser();
+const router = useRouter();
+const client = useSupabaseClient();
+const username = user.value?.user_metadata?.username;
+
+async function logout() {
+  await client.auth.signOut();
+  router.push('/');
+}
+</script>

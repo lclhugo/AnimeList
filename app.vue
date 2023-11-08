@@ -1,7 +1,7 @@
 <template>
   <div>
     <TheNavbar />
-    <main class="min-h-screen">
+    <main class="min-h-screen mt-20">
       <NuxtPage />
     </main>
     <TheFooter />

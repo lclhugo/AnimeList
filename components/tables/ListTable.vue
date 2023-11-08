@@ -17,7 +17,7 @@
             <td class="hidden md:block">
               <NuxtLink :to="'/anime/' + anime.animeId">
                 <div class="avatar">
-                  <div class="w-12 h-12 mask mask-squircle">
+                  <div class="w-12 h-12 lg:w-20 lg:h-20 mask mask-squircle">
                     <img :src="anime.animeInfo.image" alt="Anime Poster" />
                   </div>
                 </div>
@@ -41,7 +41,7 @@
 export default defineComponent({
   props: {
     animeData: {
-      type: Array as PropType<AnimeData[]>,
+      type: Array,
       required: true,
     },
     title: {
