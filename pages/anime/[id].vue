@@ -11,6 +11,29 @@
           {{ animeData?.data.images.webp.largeImageUrl }}
         </figcaption>
       </figure>
+
+      <div v-if="isInList">
+        <h3 class="text-xl font-bold">You have this anime in your list</h3>
+      </div>
+      <div v-else>
+        <h3 class="text-xl font-bold">You don't have this anime in your list</h3>
+      </div>
+      <!-- <form @submit.prevent="submitForm">
+        <label for="animeId">Anime ID:</label>
+        <input v-model="form.animeId" type="number" required />
+
+        <label for="statusId">Status ID:</label>
+        <input v-model="form.statusId" type="number" required />
+
+        <label for="watchedEpisodes">Watched Episodes:</label>
+        <input v-model="form.watchedEpisodes" type="number" required />
+
+        <label for="rating">Rating:</label>
+        <input v-model="form.rating" type="number" required />
+
+        <button type="submit">Submit</button>
+      </form> -->
+
       <div class="w-11/12 mx-auto prose-sm prose sm:prose">
         <h3 class="text-xl font-bold">Synopsis</h3>
         <p>{{ animeData?.data.synopsis }}</p>
@@ -34,4 +57,52 @@
 const route = useRoute();
 const { data: anime } = await useFetch(`https://localhost:7081/api/anime/${route.params.id}`);
 const animeData = ref(anime);
+
+const jwt = useCookie('sb-access-token');
+const { value: yourJwtToken } = jwt;
+
+const isInListResponse = await useFetch(
+  `https://localhost:7081/api/anime/list/is-in-list?animeId=${route.params.id}`,
+  {
+    headers: {
+      Authorization: `Bearer ${yourJwtToken}`,
+    },
+  },
+);
+const isInList = ref(isInListResponse.data);
+
+// const form = ref({
+//   animeId: 0,
+//   statusId: 0,
+//   watchedEpisodes: 0,
+//   rating: 0,
+// });
+
+// const submitForm = () => {
+//   const formData = {
+//     animeId: form.value.animeId,
+//     statusId: form.value.statusId,
+//     watchedEpisodes: form.value.watchedEpisodes,
+//     rating: form.value.rating,
+//     created: new Date().toISOString(),
+//     lastUpdated: new Date().toISOString(),
+//   };
+
+//   // Now you can make your API call with the formData and JWT
+//   fetch('your-api-endpoint', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${yourJwtToken}`,
+//     },
+//     body: JSON.stringify(formData),
+//   })
+//     .then(response => {
+//       // Handle the response as needed
+//     })
+//     .catch(error => {
+//       // Handle errors
+//       console.error('Error:', error);
+//     });
+// };
 </script>
