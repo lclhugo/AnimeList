@@ -78,6 +78,9 @@ const password = ref('');
 const confirmPassword = ref('');
 const errorMsg = ref('');
 const successMsg = ref('');
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const usernameRegex = /^[a-zA-Z0-9]{3,16}$/;
+const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 watchEffect(() => {
   if (password.value !== confirmPassword.value) {
@@ -87,11 +90,52 @@ watchEffect(() => {
   }
 });
 
+const checkUsernameAvailability = async username => {
+  try {
+    // Make a request to your API endpoint
+    const response = await fetch(`https://localhost:7081/api/user/username-check/${username}`);
+
+    if (response.ok) {
+      return true;
+    }
+    const data = await response.json();
+    console.error('Username is not available:', data.errorMessage);
+    return false;
+  } catch (error) {
+    console.error('Error checking username availability:', error);
+    return false;
+  }
+};
+
 const signUp = async () => {
   if (password.value !== confirmPassword.value) {
     errorMsg.value = 'Passwords do not match';
     return;
   }
+  if (!emailRegex.test(email.value)) {
+    errorMsg.value = 'Invalid email format';
+    return;
+  }
+
+  if (!usernameRegex.test(username.value)) {
+    errorMsg.value =
+      'Invalid username format, must be between 3 and 16 characters and contain only letters and numbers';
+    return;
+  }
+
+  if (!passwordRegex.test(password.value)) {
+    errorMsg.value =
+      'Password must contain at least 8 characters, one lowercase letter, one uppercase letter, and one number';
+    return;
+  }
+
+  const isUsernameAvailable = await checkUsernameAvailability(username.value);
+
+  if (!isUsernameAvailable) {
+    errorMsg.value = 'Username is not available';
+    return;
+  }
+
   const { data, error } = await client.auth.signUp({
     email: email.value,
     password: password.value,

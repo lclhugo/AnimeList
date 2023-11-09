@@ -55,7 +55,7 @@ const signIn = async () => {
   if (error) {
     errorMsg.value;
   } else {
-    router.push('/coucou');
+    router.push('/');
   }
 };
 </script>

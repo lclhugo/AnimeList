@@ -1,12 +1,27 @@
 <template>
   <div>
-    <div v-if="animeData">
-      <h2>{{ animeData?.data.title }}</h2>
-      <h3>{{ animeData?.data.title_japanese }}</h3>
-
-      <img :src="animeData?.data.images.webp.image_url" />
-      <p>{{ animeData?.data.synopsis }}</p>
-      <p>{{ animeData?.data.background }}</p>
+    <div v-if="animeData" class="flex flex-col justify-center w-11/12 gap-4 mx-auto">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold">{{ animeData?.data.title }}</h2>
+        <h3 class="text-xl font-bold">{{ animeData?.data.titleJapanese }}</h3>
+      </div>
+      <figure class="flex flex-col items-center justify-center">
+        <img :src="animeData?.data.images.webp.largeImageUrl" class="w-56 rounded-l shadow-lg" />
+        <figcaption class="text-sm text-gray-500">
+          {{ animeData?.data.images.webp.largeImageUrl }}
+        </figcaption>
+      </figure>
+      <div class="w-11/12 mx-auto prose-sm prose sm:prose">
+        <h3 class="text-xl font-bold">Synopsis</h3>
+        <p>{{ animeData?.data.synopsis }}</p>
+        <div class="collapse bg-base-200">
+          <input type="checkbox" />
+          <div class="text-xl font-medium collapse-title">Background</div>
+          <div class="collapse-content">
+            <p>{{ animeData?.data.background }}</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div v-else>
       <h1>There is no anime with this id</h1>
@@ -15,27 +30,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-
-export default {
-  setup: function () {
-    const animeData = ref(null);
-    const route = useRoute();
-
-    onMounted(async () => {
-      try {
-        const { data } = await axios.get(`https://api.jikan.moe/v4/anime/${route.params.id}`);
-        animeData.value = data;
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    });
-
-    return {
-      animeData: animeData,
-    };
-  },
-};
+<script setup lang="ts">
+const route = useRoute();
+const { data: anime } = await useFetch(`https://localhost:7081/api/anime/${route.params.id}`);
+const animeData = ref(anime);
 </script>

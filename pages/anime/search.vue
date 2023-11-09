@@ -1,24 +1,24 @@
 <template>
   <div>
     <h1 class="text-3xl font-bold text-center">Search Anime</h1>
-    <div class="container flex flex-row items-center justify-center px-4 mx-auto my-8 sm:x-auto">
-      <div class="flex flex-col items-center justify-center">
-        <label for="search">Search Anime:</label>
+    <div class="flex flex-row justify-center mx-auto my-8 join">
+      <div>
+        <label for="search" hidden>Search Anime:</label>
         <input
           id="search"
           v-model="query"
-          placeholder="Search Anime"
-          class="input input-bordered input-secondary"
+          placeholder="Search an anime name"
+          class="w-56 sm:w-96 input input-bordered border-primary join-item"
         />
       </div>
-      <div class="flex flex-col items-center justify-center">
-        <label for="genres">Select Genres:</label>
+      <div>
+        <label for="genres" hidden>Select Genres:</label>
         <select
           id="genres"
           v-model="selectedGenre"
-          class="max-w-xs select select-secondary"
-          @change="addSelectedGenre"
+          class="max-w-xs select select-primary join-item"
         >
+          <option value="" disabled selected>Select Genre</option>
           <option v-for="genre in genres" :key="genre.mal_id" :value="genre.mal_id">
             {{ genre.name }}
           </option>
@@ -29,10 +29,10 @@
       <span
         v-for="genreId in selectedGenres"
         :key="genreId"
-        class="badge badge-secondary badge-outline"
+        class="badge badge-primary badge-outline"
       >
         {{ getGenreNameById(genreId) }}
-        <button class="remove-button" @click="removeSelectedGenre(genreId)">×</button>
+        <button class="remove-button" @click="removeSelectedGenre(genreId)"></button>
       </span>
     </div>
     <div>
