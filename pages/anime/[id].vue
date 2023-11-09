@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>Welcome back {{ user.user_metadata.username }}!</p>
     <div v-if="animeData" class="flex flex-col justify-center w-11/12 gap-4 mx-auto">
       <div class="text-center">
         <h2 class="text-3xl font-bold">{{ animeData?.data.title }}</h2>
@@ -12,7 +13,7 @@
         </figcaption>
       </figure>
 
-      <div v-if="isInList">
+      <div v-if="InList">
         <h3 class="text-xl font-bold">You have this anime in your list</h3>
       </div>
       <div v-else>
@@ -37,6 +38,7 @@
       <div class="w-11/12 mx-auto prose-sm prose sm:prose">
         <h3 class="text-xl font-bold">Synopsis</h3>
         <p>{{ animeData?.data.synopsis }}</p>
+
         <div class="collapse bg-base-200">
           <input type="checkbox" />
           <div class="text-xl font-medium collapse-title">Background</div>
@@ -55,21 +57,16 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const user = useSupabaseUser();
+const { username } = user.user_metadata;
+
 const { data: anime } = await useFetch(`https://localhost:7081/api/anime/${route.params.id}`);
 const animeData = ref(anime);
 
-const jwt = useCookie('sb-access-token');
-const { value: yourJwtToken } = jwt;
-
 const isInListResponse = await useFetch(
-  `https://localhost:7081/api/anime/list/is-in-list?animeId=${route.params.id}`,
-  {
-    headers: {
-      Authorization: `Bearer ${yourJwtToken}`,
-    },
-  },
+  `https://localhost:7081/api/anime/list/get/${username}}/anime/${route.params.id}`,
 );
-const isInList = ref(isInListResponse.data);
+const InList = ref(isInListResponse.data);
 
 // const form = ref({
 //   animeId: 0,
