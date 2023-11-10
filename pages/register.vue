@@ -94,6 +94,7 @@ const checkUsernameAvailability = async username => {
   try {
     // Make a request to your API endpoint
     const response = await fetch(`https://localhost:7081/api/user/username-check/${username}`);
+    console.log(response);
 
     if (response.ok) {
       return true;

@@ -17,6 +17,7 @@
           id="genres"
           v-model="selectedGenre"
           class="max-w-xs select select-primary join-item"
+          @change="addSelectedGenre"
         >
           <option value="" disabled selected>Select Genre</option>
           <option v-for="genre in genres" :key="genre.mal_id" :value="genre.mal_id">
@@ -32,7 +33,7 @@
         class="badge badge-primary badge-outline"
       >
         {{ getGenreNameById(genreId) }}
-        <button class="remove-button" @click="removeSelectedGenre(genreId)"></button>
+        <button class="remove-button" @click="removeSelectedGenre(genreId)">x</button>
       </span>
     </div>
     <div>
