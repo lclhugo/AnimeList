@@ -37,7 +37,7 @@
                 d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span>{{ feedbackMessage }}</span>
+            {{ feedbackMessage }}
           </div>
         </div>
         <h2 class="text-3xl font-bold">{{ animeData?.data.title }}</h2>
@@ -59,119 +59,131 @@
         <button class="btn" onclick="editModal.showModal()">Edit anime</button>
         <dialog id="editModal" class="modal">
           <div class="modal-box">
+            <button
+              onclick="editModal.close()"
+              class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
+            >
+              ✕
+            </button>
             <h3 class="text-lg font-bold">Edit {{ animeData?.data.title }} in your list</h3>
-            <p class="py-4">Press ESC key or click the button below to close</p>
-            <div class="modal-action">
-              <form method="dialog">
-                <form @submit.prevent="submitEditForm">
-                  <label for="status">Status:</label>
-                  <select id="status" v-model="editedAnime.status" @change="handleStatusChange">
-                    <option value="1">Watching</option>
-                    <option value="2">Completed</option>
-                    <option value="3">On Hold</option>
-                    <option value="4">Dropped</option>
-                    <option value="6">Plan to Watch</option>
-                  </select>
-                  <label for="watchedEpisodes">Watched Episodes:</label>
-                  <div>
-                    <input
-                      id="watchedEpisodes"
-                      v-model="editedAnime.watchedEpisodes"
-                      type="number"
-                      min="0"
-                      :max="animeData?.data.episodes"
-                    />
-                    <span>/ {{ animeData?.data.episodes }}</span>
-                  </div>
-
-                  <!-- Rating -->
-                  <label for="rating">Rating:</label>
-                  <div class="rating rating-lg rating-half">
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="rating-hidden"
-                      value="0"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-1"
-                      value="1"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-2"
-                      value="2"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-1"
-                      value="3"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-2"
-                      value="4"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-1"
-                      value="5"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-2"
-                      value="6"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-1"
-                      value="7"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-2"
-                      value="8"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-1"
-                      value="9"
-                    />
-                    <input
-                      v-model="editedAnime.rating"
-                      type="radio"
-                      name="rating-10"
-                      class="bg-yellow-300 mask mask-star-2 mask-half-2"
-                      value="10"
-                    />
-                  </div>
-                  <div class="modal-action">
-                    <button class="btn btn-error" @click="editModal.close()">Cancel</button>
-                    <button class="btn btn-success" type="submit">Save Changes</button>
-                  </div>
-                </form>
+            <p class="py-4 text-sm">
+              Press
+              <kbd class="kbd">ESC</kbd>
+              or click on the ✕ to close
+            </p>
+            <form method="dialog">
+              <form class="gap-2 form-control align-center" @submit.prevent="submitEditForm">
+                <label for="status" class="label-text-alt">Status:</label>
+                <select
+                  id="status"
+                  v-model="editedAnime.status"
+                  class="w-full input input-bordered"
+                  @change="handleStatusChange"
+                >
+                  <option value="1">Watching</option>
+                  <option value="2">Completed</option>
+                  <option value="3">On Hold</option>
+                  <option value="4">Dropped</option>
+                  <option value="6">Plan to Watch</option>
+                </select>
+                <label for="watchedEpisodes" class="label-text-alt">Watched Episodes:</label>
+                <div class="join">
+                  <input
+                    id="watchedEpisodes"
+                    v-model="editedAnime.watchedEpisodes"
+                    type="number"
+                    class="w-full remove-arrow input input-bordered join-item"
+                    min="0"
+                    :max="animeData?.data.episodes"
+                  />
+                  <span class="p-2.5 join-item input input-bordered">
+                    /{{ animeData?.data.episodes }}
+                  </span>
+                </div>
+                <!-- Rating -->
+                <label for="rating" class="label-text-alt">Rating:</label>
+                <div class="mx-auto rating rating-lg rating-half">
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="rating-hidden"
+                    value="0"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-1"
+                    value="1"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-2"
+                    value="2"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-1"
+                    value="3"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-2"
+                    value="4"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-1"
+                    value="5"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-2"
+                    value="6"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-1"
+                    value="7"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-2"
+                    value="8"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-1"
+                    value="9"
+                  />
+                  <input
+                    v-model="editedAnime.rating"
+                    type="radio"
+                    name="rating-10"
+                    class="bg-yellow-300 mask mask-star-2 mask-half-2"
+                    value="10"
+                  />
+                </div>
+                <button class="mt-8 btn btn-primary" type="submit">Save Changes</button>
               </form>
-            </div>
+            </form>
           </div>
         </dialog>
         <button class="btn btn-error" @click="deleteFromList">Delete from list</button>
