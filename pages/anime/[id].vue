@@ -7,9 +7,9 @@
         <h3 class="text-xl font-bold">{{ animeData?.data.titleJapanese }}</h3>
       </div>
       <figure class="flex flex-col items-center justify-center">
-        <img :src="animeData?.data.images.webp.largeImageUrl" class="w-56 rounded-l shadow-lg" />
+        <img :src="animeData.data.images.webp.large_image_url" class="w-56 rounded-l shadow-lg" />
         <figcaption class="text-sm text-gray-500">
-          {{ animeData?.data.images.webp.largeImageUrl }}
+          {{ animeData.data.images.webp.large_image_url }}
         </figcaption>
       </figure>
 
@@ -45,13 +45,16 @@
         <h3 class="text-xl font-bold">Synopsis</h3>
         <p>{{ animeData?.data.synopsis }}</p>
 
-        <div class="collapse bg-base-200">
-          <input type="checkbox" />
-          <div class="text-xl font-medium collapse-title">Background</div>
-          <div class="collapse-content">
-            <p>{{ animeData?.data.background }}</p>
-          </div>
-        </div>
+        <iframe
+          width="560"
+          height="315"
+          :src="animeData?.data.trailer.url"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="mx-auto"
+        ></iframe>
       </div>
     </div>
     <div v-else>
@@ -73,7 +76,7 @@ const {
   clearFeedback,
 } = useFeedback();
 
-const { data: anime } = await useFetch(`https://localhost:7081/api/anime/${route.params.id}`);
+const { data: anime } = await useFetch(`https://api.jikan.moe/v4/anime/${route.params.id}/full`);
 const animeData = ref(anime);
 
 const isInListResponse = await useFetch(
