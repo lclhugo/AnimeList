@@ -1,43 +1,6 @@
 <template>
   <div>
-    <div v-if="feedbackAddMessage" v-motion-slide-visible-right class="z-50 toast toast-end">
-      <div
-        :class="{
-          'alert alert-success': feedbackAddSuccess,
-          'alert alert-error': !feedbackAddSuccess,
-        }"
-      >
-        <svg
-          v-if="feedbackAddSuccess"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 stroke-current shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <svg
-          v-if="!feedbackAddSuccess"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 stroke-current shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        {{ feedbackAddMessage }}
-      </div>
-    </div>
+    <Feedback :message="feedbackAddMessage" :success="feedbackAddSuccess" />
     <div v-if="animeData" class="flex flex-col justify-center w-11/12 gap-4 mx-auto">
       <div class="text-center">
         <h2 class="text-3xl font-bold">{{ animeData?.data.title }}</h2>
@@ -102,8 +65,13 @@
 const route = useRoute();
 const jwt = useCookie('sb-access-token');
 const { value: yourJwtToken } = jwt;
-const feedbackAddMessage = ref('');
-const feedbackAddSuccess = ref(false);
+
+const {
+  feedbackMessage: feedbackAddMessage,
+  feedbackSuccess: feedbackAddSuccess,
+  setFeedback,
+  clearFeedback,
+} = useFeedback();
 
 const { data: anime } = await useFetch(`https://localhost:7081/api/anime/${route.params.id}`);
 const animeData = ref(anime);
@@ -126,22 +94,24 @@ const addToList = async () => {
         Authorization: `Bearer ${yourJwtToken}`,
       },
     });
-    feedbackAddMessage.value = 'Anime added successfully';
-    feedbackAddSuccess.value = true;
+    setFeedback('Anime added successfully', true);
+    fetchNewInListData();
   } catch (error) {
     console.error(error);
-    feedbackAddMessage.value = 'Error adding anime';
-    feedbackAddSuccess.value = false;
+    setFeedback('Error adding anime', false);
   }
 };
 
-const removefeedbackAddMessage = () => {
-  feedbackAddMessage.value = '';
-  feedbackAddSuccess.value = false;
+const fetchNewInListData = async () => {
+  const isInListResponse = await useFetch(
+    `https://localhost:7081/api/anime/list/get/user/${route.params.id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${yourJwtToken}`,
+      },
+    },
+  );
+  InList.value = ref(isInListResponse.data);
+  console.log('new value', InList.value);
 };
-watch(feedbackAddMessage, () => {
-  if (feedbackAddMessage.value !== '') {
-    setTimeout(removefeedbackAddMessage, 3000);
-  }
-});
 </script>
