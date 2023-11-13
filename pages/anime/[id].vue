@@ -13,7 +13,7 @@
         </figcaption>
       </figure>
 
-      <div v-if="InList && InList.length > 0">
+      <div v-if="InList">
         <h3 class="text-xl font-bold">You have this anime in your list</h3>
 
         <p>Watched Episodes: {{ InList[0].watchedEpisodes }}</p>
@@ -27,13 +27,13 @@
           :current-watched-episodes="InList[0].watchedEpisodes"
           :current-status="InList[0].status.statusId"
           :current-rating="InList[0].rating"
-          @anime-updated="fetchNewInListData"
+          @anime-updated="handleAnimeUpdated"
         />
         <button class="btn" onclick="deleteModal.showModal()">Delete anime</button>
         <DeleteAnime
           :anime-id="animeData?.data.malId"
           :anime-title="animeData?.data.title"
-          @anime-deleted="fetchNewInListData"
+          @anime-deleted="handleAnimeDeleted"
         />
       </div>
       <div v-else>
@@ -95,23 +95,37 @@ const addToList = async () => {
       },
     });
     setFeedback('Anime added successfully', true);
-    fetchNewInListData();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   } catch (error) {
     console.error(error);
     setFeedback('Error adding anime', false);
   }
 };
 
-const fetchNewInListData = async () => {
-  const isInListResponse = await useFetch(
-    `https://localhost:7081/api/anime/list/get/user/${route.params.id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${yourJwtToken}`,
-      },
-    },
-  );
-  InList.value = ref(isInListResponse.data);
-  console.log('new value', InList.value);
+const handleAnimeUpdated = () => {
+  try {
+    setFeedback('Anime updated successfully', true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  } catch (error) {
+    console.error(error);
+    setFeedback('Error updating anime', false);
+  }
+};
+
+const handleAnimeDeleted = () => {
+  try {
+    console.log('Anime deleted');
+    setFeedback('Anime deleted successfully', true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  } catch (error) {
+    console.error(error);
+    setFeedback('Error deleting anime', false);
+  }
 };
 </script>

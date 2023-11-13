@@ -1,43 +1,5 @@
 <template>
   <div>
-    <div v-if="feedbackDeleteMessage" v-motion-slide-visible-right class="z-50 toast toast-end">
-      <div
-        :class="{
-          'alert alert-success': feedbackDeleteSuccess,
-          'alert alert-error': !feedbackDeleteSuccess,
-        }"
-      >
-        <svg
-          v-if="feedbackDeleteSuccess"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 stroke-current shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <svg
-          v-if="!feedbackDeleteSuccess"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 stroke-current shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        {{ feedbackDeleteMessage }}
-      </div>
-    </div>
     <dialog id="deleteModal" class="modal" @click.self="closeModal">
       <div class="modal-box">
         <button
@@ -81,14 +43,9 @@ const deleteFromList = async () => {
       },
     });
     emit('anime-deleted');
-    const modal = document.getElementById('deleteModal');
-    feedbackDeleteMessage.value = 'Anime deleted successfully';
-    feedbackDeleteSuccess.value = true;
-    modal.close();
+    closeModal();
   } catch (error) {
     console.error(error);
-    feedbackDeleteMessage.value = 'Error deleting anime';
-    feedbackDeleteSuccess.value = false;
   }
 };
 
@@ -96,15 +53,4 @@ const closeModal = () => {
   const modal = document.getElementById('deleteModal');
   modal.close();
 };
-
-const removefeedbackDeleteMessage = () => {
-  feedbackDeleteMessage.value = '';
-  feedbackDeleteSuccess.value = false;
-};
-
-watch(feedbackDeleteMessage, () => {
-  if (feedbackDeleteMessage.value !== '') {
-    setTimeout(removefeedbackDeleteMessage, 3000);
-  }
-});
 </script>

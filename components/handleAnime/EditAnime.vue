@@ -1,43 +1,5 @@
 <template>
   <div>
-    <div v-if="feedbackEditMessage" v-motion-slide-visible-right class="z-50 toast toast-end">
-      <div
-        :class="{
-          'alert alert-success': feedbackEditSuccess,
-          'alert alert-error': !feedbackEditSuccess,
-        }"
-      >
-        <svg
-          v-if="feedbackEditSuccess"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 stroke-current shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <svg
-          v-if="!feedbackEditSuccess"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 stroke-current shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        {{ feedbackEditMessage }}
-      </div>
-    </div>
     <dialog id="editModal" class="modal" @click.self="closeModal">
       <div class="modal-box">
         <button
@@ -209,13 +171,9 @@ const submitEditForm = async () => {
     });
     emit('anime-updated');
     const modal = document.getElementById('editModal');
-    feedbackEditMessage.value = 'Anime updated successfully';
-    feedbackEditSuccess.value = true;
     modal.close();
   } catch (error) {
     console.error(error);
-    feedbackEditMessage.value = 'Error updating anime';
-    feedbackEditSuccess.value = false;
   }
 };
 
@@ -228,16 +186,6 @@ const handleStatusChange = () => {
     editedAnime.value.watchedEpisodes = animeEpisodes;
   }
 };
-
-const removefeedbackEditMessage = () => {
-  feedbackEditMessage.value = '';
-  feedbackEditSuccess.value = false;
-};
-watch(feedbackEditMessage, () => {
-  if (feedbackEditMessage.value !== '') {
-    setTimeout(removefeedbackEditMessage, 3000);
-  }
-});
 
 const closeModal = () => {
   const modal = document.getElementById('editModal');
