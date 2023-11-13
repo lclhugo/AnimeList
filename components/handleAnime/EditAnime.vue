@@ -133,8 +133,6 @@
 <script setup lang="ts">
 const jwt = useCookie('sb-access-token');
 const { value: yourJwtToken } = jwt;
-const feedbackEditMessage = ref('');
-const feedbackEditSuccess = ref(false);
 
 const { animeId, animeTitle, animeEpisodes, currentWatchedEpisodes, currentStatus, currentRating } =
   defineProps([

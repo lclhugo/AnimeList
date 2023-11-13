@@ -1,9 +1,11 @@
 <template>
   <NuxtLayout>
     <div v-if="animes.length === 0">No data was found</div>
-    <div v-else>
-      <h1 class="mb-8 text-4xl font-bold">{{ title }}</h1>
-      <div class="flex flex-wrap justify-center w-11/12 gap-2 mx-auto md:gap-0 md:justify-around">
+    <div v-else class="container mx-auto">
+      <h1 class="mb-8 text-4xl font-bold text-center">{{ title }}</h1>
+      <div
+        class="flex flex-wrap justify-around mx-auto gap-y-16 md:max-w-7xl md:justify-center md:gap-x-4"
+      >
         <AnimeCard
           v-for="anime in displayedAnimes"
           :id="anime.mal_id"
@@ -12,7 +14,7 @@
           :image="anime.images.jpg.large_image_url"
         />
       </div>
-      <div class="flex justify-between my-8">
+      <div class="flex justify-between my-8 mt-24">
         <div class="mx-auto join">
           <button class="join-item btn" :disabled="currentPage === 1" @click="prevPage">«</button>
           <button class="join-item btn">Page {{ currentPage }}</button>
@@ -40,7 +42,7 @@ const { url, title } = defineProps({
   },
   title: {
     type: String,
-    default: 'Top Anime',
+    default: 'Anime',
   },
 });
 

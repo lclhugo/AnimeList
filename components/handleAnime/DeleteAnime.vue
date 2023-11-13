@@ -28,8 +28,6 @@
 <script lang="ts" setup>
 const jwt = useCookie('sb-access-token');
 const { value: yourJwtToken } = jwt;
-const feedbackDeleteMessage = ref('');
-const feedbackDeleteSuccess = ref(false);
 
 const { animeId, animeTitle } = defineProps(['animeId', 'animeTitle']);
 const emit = defineEmits(['anime-deleted']);
