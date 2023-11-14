@@ -45,4 +45,40 @@ const { url, title } = defineProps({
     default: 'Anime',
   },
 });
+
+const displayedAnimes = ref([]);
+const animes = ref([]);
+const currentPage = ref(1);
+const totalPages = ref(1);
+
+const fetchData = async (page: number) => {
+  try {
+    const response = await axios.get(`${url}?page=${page}`);
+    const { data } = response;
+    animes.value = data.data;
+    displayedAnimes.value = data.data;
+    totalPages.value = data.pagination.last_visible_page;
+    console.log('data', data.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value = currentPage.value - 1;
+    fetchData(currentPage.value);
+  }
+};
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value = currentPage.value + 1;
+    fetchData(currentPage.value);
+  }
+};
+
+onMounted(() => {
+  fetchData(currentPage.value);
+});
 </script>
