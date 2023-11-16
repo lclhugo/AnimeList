@@ -73,7 +73,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import axios from 'axios';
 const { genres, fetchGenres, getGenreNameById } = useGenres();
 

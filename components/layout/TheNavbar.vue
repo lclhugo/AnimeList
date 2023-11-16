@@ -28,6 +28,9 @@
             <li>
               <NuxtLink to="/">Anime</NuxtLink>
               <ul class="p-2">
+                <li v-if="user">
+                  <NuxtLink :to="'/user/' + username + '/anime'">Your Anime List!</NuxtLink>
+                </li>
                 <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
                 <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
@@ -36,6 +39,9 @@
             <li>
               <NuxtLink to="/">Manga</NuxtLink>
               <ul class="p-2">
+                <li v-if="user">
+                  <NuxtLink :to="'/user/' + username + '/manga'">Your Manga List!</NuxtLink>
+                </li>
                 <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
               </ul>
@@ -64,6 +70,9 @@
           tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
+          <li v-if="user">
+            <NuxtLink :to="'/user/' + username + '/anime'">Your List!</NuxtLink>
+          </li>
           <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
           <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
           <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
@@ -75,19 +84,11 @@
           tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
+          <li v-if="user">
+            <NuxtLink :to="'/user/' + username + '/manga'">Your List!</NuxtLink>
+          </li>
           <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
           <li><NuxtLink to="/manga/top">TopRatings</NuxtLink></li>
-        </ul>
-      </div>
-      <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost">Anime</label>
-        <ul
-          tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
-        >
-          <li><NuxtLink to="/anime/search">Search</NuxtLink></li>
-          <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
-          <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
         </ul>
       </div>
     </div>

@@ -150,6 +150,7 @@ const signUp = async () => {
     const { message } = error;
     errorMsg.value = message;
   } else {
+    errorMsg.value = '';
     successMsg.value = 'You are now registered! You can now login.';
   }
 };

@@ -52,10 +52,6 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    title: {
-      type: String,
-      required: true,
-    },
   },
 });
 </script>
