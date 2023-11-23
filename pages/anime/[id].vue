@@ -176,9 +176,6 @@ const addToList = async () => {
 const handleAnimeUpdated = () => {
   try {
     setFeedback('Anime updated successfully', true);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
   } catch (error) {
     console.error(error);
     setFeedback('Error updating anime', false);

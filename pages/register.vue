@@ -130,12 +130,12 @@ const signUp = async () => {
     return;
   }
 
-  const isUsernameAvailable = await checkUsernameAvailability(username.value);
+  // const isUsernameAvailable = await checkUsernameAvailability(username.value);
 
-  if (!isUsernameAvailable) {
-    errorMsg.value = 'Username is not available';
-    return;
-  }
+  // if (!isUsernameAvailable) {
+  //   errorMsg.value = 'Username is not available';
+  //   return;
+  // }
 
   const { data, error } = await client.auth.signUp({
     email: email.value,

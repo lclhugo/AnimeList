@@ -51,7 +51,7 @@
       { "requireReturnForObjectLiteral": true }
     ],
     "brace-style": "error",
-    "camelcase": ["error", { "ignoreImports": true }],
+    "camelcase": ["off", { "ignoreImports": true }],
     "comma-dangle": ["error", "always-multiline"],
     "comma-style": ["error", "last"],
     "complexity": ["error", 10],
