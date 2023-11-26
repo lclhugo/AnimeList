@@ -16,6 +16,20 @@
         />
       </div>
       <div>
+        <label for="types" hidden>Select Type:</label>
+        <select id="genres" v-model="selectedType" class="max-w-xs select select-primary join-item">
+          <option value="" disabled selected>Select Type</option>
+          <option value="">All</option>
+          <option value="tv">TV</option>
+          <option value="movie">Movie</option>
+          <option value="ova">OVA</option>
+          <option value="ona">ONA</option>
+          <option value="special">Special</option>
+          <option value="music">Music</option>
+        </select>
+      </div>
+
+      <div>
         <label for="genres" hidden>Select Genres:</label>
         <select
           id="genres"
@@ -91,10 +105,12 @@ const currentPage = ref(1);
 const selectedGenres: Ref<string[]> = ref([]);
 const selectedGenre = ref<string>('');
 
+const selectedType = ref<string>('');
+
 const totalPages = ref(1);
 const query = ref('');
 
-const fetchData = async (page: number, genres?: string) => {
+const fetchData = async (page: number) => {
   try {
     let apiUrl;
 
@@ -108,6 +124,10 @@ const fetchData = async (page: number, genres?: string) => {
 
     if (genresString) {
       apiUrl += `&genres=${genresString}`;
+    }
+
+    if (selectedType.value) {
+      apiUrl += `&type=${selectedType.value}`;
     }
 
     const response = await axios.get(apiUrl);
@@ -155,8 +175,7 @@ onMounted(() => {
   fetchGenres();
 });
 
-watch([query, selectedGenres], () => {
-  currentPage.value = 1;
-  fetchData(currentPage.value, selectedGenres.value.join(','));
+watch([query, selectedGenres, selectedGenre, selectedType], () => {
+  fetchData((currentPage.value = 1));
 });
 </script>

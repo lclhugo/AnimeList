@@ -16,7 +16,7 @@ export interface MangaList {
     statusid: number;
     statusname: string;
   };
-  animeInfo: {
+  mangaInfo: {
     title: string;
     image: string;
     type: string;

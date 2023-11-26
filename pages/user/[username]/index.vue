@@ -1,6 +1,124 @@
+<template>
+  <div class="container grid grid-cols-1 gap-12 p-4 mx-auto md:grid-cols-8">
+    <div class="flex flex-col col-span-2 gap-12">
+      <div class="flex flex-col items-center justify-center mx-auto md:items-end md:flex-row">
+        <img
+          v-if="avatarUrl == ''"
+          src="~/assets/images/default-avatar.jpg"
+          alt="{{ username }}'s avatar"
+          class="w-full max-w-[200px] max-h-[200] hover:opacity-80 transition-opacity duration-300 rounded-full"
+        />
+        <img
+          v-else
+          :src="avatarUrl"
+          alt="{{ username }}'s avatar"
+          class="w-full max-w-[200px] max-h-[200] hover:opacity-80 transition-opacity duration-300 rounded-full"
+        />
+        <h2
+          class="text-2xl font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-10% to-secondary to-100%"
+        >
+          {{ UserData.username }}
+        </h2>
+      </div>
+      <div>
+        <div class="w-full mockup-window bg-base-300">
+          <p class="flex justify-center px-4 py-16 bg-base-200">
+            {{ UserData.bio }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-6">
+      <div>
+        <label class="text-5xl swap swap-flip">
+          <input v-model="isChecked" type="checkbox" @change="handleChange" />
+          <div class="flex items-center p-2 border rounded-full swap-on border-primary">
+            <h3
+              class="text-4xl font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+            >
+              Anime
+            </h3>
+            <span>📺</span>
+          </div>
+          <div class="flex items-center swap-off">
+            <h3
+              class="text-4xl font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+            >
+              Manga
+            </h3>
+            <span>📖</span>
+          </div>
+        </label>
+      </div>
+      <div v-if="selectedType === 'anime'">
+        <div v-if="watching.length === 0">
+          <p class="text-xl font-bold">{{ username }} is not watching any anime for now! 😢</p>
+        </div>
+        <div v-else>
+          <h3
+            class="text-4xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+          >
+            Resume watching!
+          </h3>
+          <div
+            v-motion-fade-visible
+            class="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+          >
+            <AnimeCard
+              v-for="anime in watching"
+              :id="anime.animeid"
+              :key="anime.animeid"
+              :name="anime.animeInfo.title"
+              :image="anime.animeInfo.image"
+            />
+          </div>
+        </div>
+        <NuxtLink class="btn btn-primary" :to="'/user/' + username + '/anime'">See list</NuxtLink>
+      </div>
+      <div v-else>
+        <div v-if="reading.length === 0" class="text-left">
+          <p class="text-xl font-bold">{{ username }} is not reading any manga for now! 😢</p>
+        </div>
+        <div v-else>
+          <h3
+            class="text-2xl font-extrabold text-transparent title bg-clip-text mb-8 bg-gradient-to-r from-primary from-10 via-10% to-secondary to-100%"
+          >
+            Resume reading!
+          </h3>
+          <div
+            v-motion-fade-visible
+            class="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+          >
+            <MangaCard
+              v-for="manga in reading"
+              :id="manga.mangaid"
+              :key="manga.mangaid"
+              :name="manga.mangaInfo.title"
+              :image="manga.mangaInfo.image"
+            />
+          </div>
+        </div>
+        <NuxtLink class="btn btn-primary" :to="'/user/' + username + '/manga'">See list</NuxtLink>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import axios from 'axios';
 import type { User } from '~/types/user';
+import type { AnimeList } from '~/types/animes';
+import type { MangaList } from '~/types/mangas';
+const isChecked = ref<boolean>(true);
+const selectedType = ref<string>('anime');
+
+const handleChange = () => {
+  if (isChecked.value) {
+    selectedType.value = 'anime';
+  } else {
+    selectedType.value = 'manga';
+  }
+};
 
 const {
   params: { username },
@@ -18,6 +136,31 @@ const UserData = ref<User>({
 });
 const avatarUrl = ref<string>('');
 
+const watching = ref<AnimeList[]>([]);
+const reading = ref<MangaList[]>([]);
+
+const fetchAnimeList = async () => {
+  try {
+    const { data } = await axios.get(
+      `https://localhost:7081/api/anime/list/get/${username}/watching/5`,
+    );
+    watching.value = data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const fetchMangaList = async () => {
+  try {
+    const { data } = await axios.get(
+      `https://localhost:7081/api/manga/list/get/${username}/reading/5`,
+    );
+    reading.value = data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 onMounted(async () => {
   try {
     const { data } = await axios.get(`https://localhost:7081/api/user/${username}`);
@@ -27,40 +170,10 @@ onMounted(async () => {
     } else {
       avatarUrl.value = `https://xepjirqsxefnlhjmaqoh.supabase.co/storage/v1/object/public/avatars/${UserData.value.avatarUrl}`;
     }
+    await fetchAnimeList();
+    await fetchMangaList();
   } catch (error) {
     console.error(error);
   }
 });
 </script>
-
-<template>
-  <div
-    class="container flex flex-col gap-8 px-4 py-8 mx-auto sm:px-6 md:px-8 lg:px-10 xl:px-20 2xl:px-32"
-  >
-    <h2
-      class="text-2xl font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-10% to-secondary to-100%"
-    >
-      Welcome to {{ UserData.username }}'s profile!
-    </h2>
-    <div class="flex items-center justify-center">
-      <img
-        v-if="avatarUrl == ''"
-        src="~/assets/images/default-avatar.jpg"
-        alt="{{ username }}'s avatar"
-        class="w-full max-w-[200px] max-h-[200] mx-auto hover:opacity-80 transition-opacity duration-300"
-      />
-      <img
-        v-else
-        :src="avatarUrl"
-        alt="{{ username }}'s avatar"
-        class="w-full max-w-[200px] max-h-[200] mx-auto hover:opacity-80 transition-opacity duration-300"
-      />
-    </div>
-    <div class="mx-auto prose">
-      <h3>About:</h3>
-      <p>{{ UserData.bio }}</p>
-      <NuxtLink :to="'/user/' + username + '/anime'" class="btn btn-primary">Anime List!</NuxtLink>
-      <NuxtLink :to="'/user/' + username + '/manga'" class="btn btn-primary">Manga List!</NuxtLink>
-    </div>
-  </div>
-</template>
