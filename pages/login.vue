@@ -30,6 +30,9 @@
       <div v-if="errorMsg" class="mb-4 text-center text-error">
         {{ errorMsg }}
       </div>
+      <div v-if="successMsg" class="mb-4 text-center text-success">
+        {{ successMsg }}
+      </div>
       <button type="submit" class="w-full p-2 btn btn-primary">Sign In</button>
     </form>
   </CenterLayout>
@@ -46,16 +49,24 @@ const router = useRouter();
 const email = ref('');
 const password = ref('');
 const errorMsg = ref('');
+const successMsg = ref('');
 
 const signIn = async () => {
+  if (!email.value || !password.value) {
+    errorMsg.value = 'Please fill in all fields.';
+    return;
+  }
+
   const { error } = await client.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
   if (error) {
-    errorMsg.value;
+    const { message } = error;
+    errorMsg.value = message;
   } else {
-    router.push('/');
+    successMsg.value = 'Successfully logged in!';
+    await router.push('/');
   }
 };
 </script>

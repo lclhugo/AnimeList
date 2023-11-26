@@ -1,9 +1,8 @@
-// useGenres.ts
-import { ref } from 'vue';
 import axios from 'axios';
+import type { Genres } from '~/types/genres';
 
 export function useGenres() {
-  const genres = ref([]);
+  const genres = ref([] as Genres[]);
 
   const fetchGenres = async () => {
     try {
@@ -14,8 +13,9 @@ export function useGenres() {
     }
   };
 
-  const getGenreNameById = genreId => {
-    const genre = genres.value.find(gen => gen.mal_id === genreId);
+  const getGenreNameById = (genreId: string) => {
+    const parsedGenreId = parseInt(genreId); // Assuming base 10
+    const genre = genres.value.find(gen => gen.mal_id === parsedGenreId);
     return genre ? genre.name : '';
   };
 

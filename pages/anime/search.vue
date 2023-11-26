@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-center">Search Anime</h1>
+    <h1
+      class="text-4xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+    >
+      Search Anime
+    </h1>
     <div class="flex flex-row justify-center mx-auto my-8 join">
       <div>
         <label for="search" hidden>Search Anime:</label>
@@ -8,7 +12,7 @@
           id="search"
           v-model="query"
           placeholder="Search an anime name"
-          class="w-56 sm:w-96 input input-bordered border-primary join-item"
+          class="w-56 sm:w-96 input input-bordered input-primary join-item"
         />
       </div>
       <div>
@@ -26,18 +30,31 @@
         </select>
       </div>
     </div>
-    <div class="container flex flex-row items-center justify-center px-4 mx-auto my-8 sm:x-auto">
-      <span
-        v-for="genreId in selectedGenres"
-        :key="genreId"
-        class="badge badge-primary badge-outline"
-      >
+    <div
+      class="container flex flex-row flex-wrap items-center justify-center max-w-2xl gap-2 px-4 mx-auto my-8 sm:x-auto"
+    >
+      <span v-for="genreId in selectedGenres" :key="genreId" class="gap-2 badge badge-primary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block w-4 h-4 cursor-pointer stroke-current current-color"
+          @click="removeSelectedGenre(genreId)"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
         {{ getGenreNameById(genreId) }}
-        <button class="remove-button" @click="removeSelectedGenre(genreId)">x</button>
       </span>
     </div>
     <div>
-      <div class="flex flex-wrap justify-center w-11/12 gap-2 mx-auto md:gap-0 md:justify-around">
+      <div
+        class="flex flex-wrap justify-around mx-auto gap-y-16 md:max-w-7xl md:justify-center md:gap-x-4"
+      >
         <AnimeCard
           v-for="anime in displayedAnimes"
           :id="anime.mal_id"
@@ -46,10 +63,9 @@
           :image="anime.images.jpg.large_image_url"
         />
       </div>
-      <div v-show="totalPages > 1" class="flex justify-between my-8">
+      <div v-show="totalPages > 1" class="flex justify-between my-8 mt-24">
         <div class="mx-auto join">
           <button class="join-item btn" :disabled="currentPage === 1" @click="prevPage">«</button>
-          <button class="join-item btn">Page {{ currentPage }}</button>
           <button class="join-item btn" :disabled="currentPage === totalPages" @click="nextPage">
             »
           </button>
@@ -60,15 +76,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import axios from 'axios';
+import type { DisplayedAnime } from '~/types/animes';
 const { genres, fetchGenres, getGenreNameById } = useGenres();
 
 definePageMeta({
   layout: 'base',
 });
 
-const displayedAnimes = ref([]);
+const displayedAnimes = ref([] as DisplayedAnime[]);
 const animes = ref([]);
 const currentPage = ref(1);
 
