@@ -15,16 +15,15 @@
 
       <div v-if="InList" class="flex flex-col items-center justify-center">
         <h3 class="text-xl font-bold">You have this anime in your list</h3>
-        <p>Status: {{ InList[0].status.statusName }}</p>
-        <p>Watched Episodes: {{ InList[0].watchedEpisodes / animeData.data.episodes }}</p>
+        <p>Status: {{ InList[0].status.statusname }}</p>
         <p>Rating: {{ InList[0].rating }} / 10</p>
         <button class="btn btn-primary" onclick="editModal.showModal()">Edit entry</button>
         <EditAnime
           :anime-id="animeData?.data.mal_id"
           :anime-title="animeData?.data.title"
           :anime-episodes="animeData?.data.episodes"
-          :current-watched-episodes="InList[0].watchedEpisodes"
-          :current-status="InList[0].status.statusId"
+          :current-watched-episodes="InList[0].watchedepisodes"
+          :current-status="InList[0].status.statusid"
           :current-rating="InList[0].rating"
           @anime-updated="handleAnimeUpdated"
         />
@@ -32,13 +31,12 @@
           Remove from your list
         </button>
         <DeleteAnime
-          :anime-id="animeData?.data.malId"
+          :anime-id="animeData?.data.mal_id"
           :anime-title="animeData?.data.title"
           @anime-deleted="handleAnimeDeleted"
         />
       </div>
-      <div v-else>
-        <h3 class="text-xl font-bold">You don't have this anime in your list</h3>
+      <div v-else class="flex flex-col items-center justify-center">
         <button class="btn btn-success" @click="addToList">Add to list</button>
       </div>
 
@@ -175,7 +173,10 @@ const addToList = async () => {
 
 const handleAnimeUpdated = () => {
   try {
-    setFeedback('Anime updated successfully', true);
+    setFeedback('Anime edited successfully', true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   } catch (error) {
     console.error(error);
     setFeedback('Error updating anime', false);

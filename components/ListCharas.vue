@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import type { DisplayedAnime } from '~/types/animes';
 
 definePageMeta({
   layout: 'base',
@@ -46,7 +47,7 @@ const { url, title } = defineProps({
   },
 });
 
-const displayedAnimes = ref([]);
+const displayedAnimes = ref([] as DisplayedAnime[]);
 const animes = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);

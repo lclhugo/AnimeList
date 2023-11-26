@@ -1,5 +1,10 @@
 <script setup>
-const props = defineProps(['path']);
+const props = defineProps({
+  path: {
+    type: String,
+    required: true,
+  },
+});
 const { path } = toRefs(props);
 
 const emit = defineEmits(['update:path', 'upload']);
@@ -9,6 +14,7 @@ const supabase = useSupabaseClient();
 const uploading = ref(false);
 const src = ref('');
 const files = ref();
+const errorMsg = ref('');
 
 const downloadImage = async () => {
   try {
@@ -21,12 +27,21 @@ const downloadImage = async () => {
 };
 
 const uploadAvatar = async evt => {
+  errorMsg.value = '';
   files.value = evt.target.files;
   try {
     uploading.value = true;
 
     if (!files.value || files.value.length === 0) {
-      throw new Error('You must select an image to upload.');
+      errorMsg.value = 'You must select an image to upload.';
+    }
+
+    if (files.value[0].size > 2000000) {
+      errorMsg.value = 'Image must be under 2MB.';
+    }
+
+    if (!files.value[0].type.includes('image')) {
+      errorMsg.value = 'You must select an image file (png, jpg, jpeg).';
     }
 
     const file = files.value[0];
@@ -57,28 +72,22 @@ watch(path, () => {
 </script>
 
 <template>
-  <div>
-    <img
-      v-if="src"
-      :src="src"
-      alt="Avatar"
-      class="avatar image"
-      style="width: 10em; height: 10em"
-    />
-    <div v-else />
+  <div v-if="src" class="flex flex-col items-center justify-center gap-4">
+    <img :src="src" alt="Avatar" class="avatar max-w-[200px] max-h-[200px] rounded-full" />
+    <h3 class="font-bold title">Edit your avatar:</h3>
 
     <div>
-      <label class="block button primary" for="single">
-        {{ uploading ? 'Uploading ...' : 'Upload' }}
-      </label>
+      <span v-if="uploading" class="loading loading-spinner text-primary"></span>
+      <label for="single" hidden></label>
       <input
         id="single"
-        style="position: absolute; visibility: hidden"
+        class="w-full max-w-xs file-input file-input-bordered file-input-primary"
         type="file"
         accept="image/*"
         :disabled="uploading"
         @change="uploadAvatar"
       />
+      <p class="text-sm text-center text-error">{{ errorMsg }}</p>
     </div>
   </div>
 </template>

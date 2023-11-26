@@ -166,7 +166,7 @@
     "padded-blocks": ["error", "never"],
     "prefer-arrow-callback": ["error", { "allowUnboundThis": false }],
     "prefer-destructuring": [
-      "warn",
+      "off",
       { "array": false, "object": true },
       { "enforceForRenamedProperties": true }
     ],

@@ -1,11 +1,8 @@
 <template>
-  <div
-    v-motion-fade-visible
-    class="transition-all duration-300 ease-in-out w-44 sm:w-56 hover:shadow-xl hover:translate-x-1 hover:translate-y-1"
-  >
+  <div v-motion-fade-visible class="shadow-xl w-44 h-60">
     <NuxtLink :to="'/manga/' + id">
       <figure>
-        <img :src="image" class="object-cover mb-2 rounded-lg w-44 xl:w-56 h-60 xl:h-80" />
+        <img :src="image" class="object-cover rounded-lg w-44 h-60 hover:opacity-75" />
       </figure>
       <div>
         <h3 class="text-sm font-semibold">{{ name }}</h3>
@@ -26,7 +23,7 @@ const props = defineProps({
   },
   name: {
     type: String,
-    default: 'Default manga Name',
+    default: 'Default Manga Name',
   },
   delay: {
     type: Number,
