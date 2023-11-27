@@ -80,7 +80,6 @@ export default {
       try {
         const { data } = await axios.get(`https://localhost:7081/api/anime/list/get/${username}`);
         animeData.value = data;
-        console.log('data', data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

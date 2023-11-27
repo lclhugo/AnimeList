@@ -157,7 +157,6 @@ const submitEditForm = async () => {
     readchapters: editedManga.value.readchapters,
     rating: editedManga.value.rating,
   };
-  console.log(jsonPayload);
   try {
     await useFetch(`https://localhost:7081/api/manga/list/update/${mangaId}`, {
       method: 'PUT',
@@ -175,10 +174,6 @@ const submitEditForm = async () => {
     console.error(error);
   }
 };
-
-watch(editedManga, () => {
-  console.log(editedManga.value);
-});
 
 const handleStatusChange = () => {
   if (editedManga.value.status === 2) {

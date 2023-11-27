@@ -90,23 +90,21 @@ watchEffect(() => {
   }
 });
 
-// const checkUsernameAvailability = async username => {
-//   try {
-//     // Make a request to your API endpoint
-//     const response = await fetch(`https://localhost:7081/api/user/username-check/${username}`);
-//     console.log(response);
+const checkUsernameAvailability = async (username: string) => {
+  try {
+    const response = await fetch(`https://localhost:7081/api/user/check-username/${username}`);
 
-//     if (response.ok) {
-//       return true;
-//     }
-//     const data = await response.json();
-//     console.error('Username is not available:', data.errorMessage);
-//     return false;
-//   } catch (error) {
-//     console.error('Error checking username availability:', error);
-//     return false;
-//   }
-// };
+    if (response.ok) {
+      return true;
+    }
+    const data = await response.json();
+    console.error('Username is not available:', data.errorMessage);
+    return false;
+  } catch (error) {
+    console.error('Error checking username availability:', error);
+    return false;
+  }
+};
 
 const signUp = async () => {
   errorMsg.value = '';

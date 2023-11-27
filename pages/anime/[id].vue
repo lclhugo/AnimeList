@@ -185,7 +185,6 @@ const handleAnimeUpdated = () => {
 
 const handleAnimeDeleted = () => {
   try {
-    console.log('Anime deleted');
     setFeedback('Anime deleted successfully', true);
     setTimeout(() => {
       window.location.reload();

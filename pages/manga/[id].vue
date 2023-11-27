@@ -163,7 +163,6 @@ const handlemangaUpdated = () => {
 
 const handlemangaDeleted = () => {
   try {
-    console.log('manga deleted');
     setFeedback('manga deleted successfully', true);
     setTimeout(() => {
       window.location.reload();
