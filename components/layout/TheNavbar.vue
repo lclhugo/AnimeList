@@ -106,7 +106,7 @@
               <img v-else :src="avatarUrl" alt="avatar" class="w-full rounded-full" />
             </div>
           </div>
-          {{ username }}
+          <p class="ml-2">{{ username }}</p>
         </label>
         <ul
           tabindex="0"

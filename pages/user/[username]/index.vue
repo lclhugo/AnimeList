@@ -1,6 +1,6 @@
 <template>
   <div class="container grid grid-cols-1 gap-12 p-4 mx-auto md:grid-cols-8">
-    <div class="flex flex-col col-span-2 gap-12">
+    <div class="col-span-8 w-full flex flex-col md:col-span-3 lg:col-span-2 gap-12">
       <div class="flex flex-col items-center justify-center mx-auto md:items-end md:flex-row">
         <img
           v-if="avatarUrl == ''"
@@ -22,17 +22,17 @@
       </div>
       <div>
         <div class="w-full mockup-window bg-base-300">
-          <p class="flex justify-center px-4 py-16 bg-base-200">
+          <div class="flex justify-center px-4 py-8 bg-base-200">
             {{ UserData.bio }}
-          </p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-span-6">
+    <div class="col-span-8 md:col-span-5 lg:col-span-6">
       <div>
         <label class="text-5xl swap swap-flip">
           <input v-model="isChecked" type="checkbox" @change="handleChange" />
-          <div class="flex items-center p-2 border rounded-full swap-on border-primary">
+          <div class="mx-auto md:mx-0 flex items-center rounded-full swap-on border-primary">
             <h3
               class="text-4xl font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
             >
@@ -56,13 +56,12 @@
         </div>
         <div v-else>
           <h3
-            class="text-4xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+            class="text-2xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto md:text-left md:mx-0"
           >
             Resume watching!
           </h3>
           <div
-            v-motion-fade-visible
-            class="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+            class="flex flex-wrap justify-around mx-auto md:mx-0 lg:gap-y-16 md:justify-center gap-4 md:gap-8 gap-y-16 xl:justify-start"
           >
             <AnimeCard
               v-for="anime in watching"
@@ -73,7 +72,11 @@
             />
           </div>
         </div>
-        <NuxtLink class="btn btn-primary" :to="'/user/' + username + '/anime'">See list</NuxtLink>
+        <div class="flex justify-center mt-16 md:justify-start">
+          <NuxtLink class="btn btn-primary" :to="'/user/' + username + '/anime'">
+            Anime List
+          </NuxtLink>
+        </div>
       </div>
       <div v-else>
         <div v-if="reading.length === 0" class="text-left">
@@ -81,13 +84,12 @@
         </div>
         <div v-else>
           <h3
-            class="text-2xl font-extrabold text-transparent title bg-clip-text mb-8 bg-gradient-to-r from-primary from-10 via-10% to-secondary to-100%"
+            class="text-2xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto md:text-left md:mx-0"
           >
             Resume reading!
           </h3>
           <div
-            v-motion-fade-visible
-            class="grid grid-cols-2 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+            class="flex flex-wrap justify-around mx-auto md:mx-0 lg:gap-y-16 md:justify-center gap-4 md:gap-8 gap-y-16 xl:justify-start"
           >
             <MangaCard
               v-for="manga in reading"
@@ -98,7 +100,11 @@
             />
           </div>
         </div>
-        <NuxtLink class="btn btn-primary" :to="'/user/' + username + '/manga'">See list</NuxtLink>
+        <div class="flex justify-center mt-16 md:justify-start">
+          <NuxtLink class="btn btn-primary" :to="'/user/' + username + '/manga'">
+            Manga List
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
