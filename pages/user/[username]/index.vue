@@ -42,7 +42,7 @@
           </div>
           <div class="flex items-center swap-off">
             <h3
-              class="text-4xl font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+              class="text-4xl text-center font-extrabold text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit"
             >
               Manga
             </h3>
@@ -58,7 +58,7 @@
           <h3
             class="text-2xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto md:text-left md:mx-0"
           >
-            Resume watching!
+            Currently watching!
           </h3>
           <div
             class="flex flex-wrap justify-around mx-auto md:mx-0 lg:gap-y-16 md:justify-center gap-4 md:gap-8 gap-y-16 xl:justify-start"
@@ -86,7 +86,7 @@
           <h3
             class="text-2xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto md:text-left md:mx-0"
           >
-            Resume reading!
+            Currently reading!
           </h3>
           <div
             class="flex flex-wrap justify-around mx-auto md:mx-0 lg:gap-y-16 md:justify-center gap-4 md:gap-8 gap-y-16 xl:justify-start"
