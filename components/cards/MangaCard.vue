@@ -1,5 +1,5 @@
 <template>
-  <div v-motion-fade-visible class="shadow-xl w-44 h-60">
+  <div v-motion-fade class="shadow-xl w-44 h-60">
     <NuxtLink :to="'/manga/' + id">
       <figure>
         <img :src="image" class="object-cover rounded-lg w-44 h-60 hover:opacity-75" />

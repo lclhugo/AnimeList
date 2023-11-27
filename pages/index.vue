@@ -1,5 +1,5 @@
 <template>
-  <div v-motion-pop-visible-once :delay="300">
+  <div v-motion-pop :delay="300">
     <div v-if="!user">
       <WelcomeBox />
     </div>
