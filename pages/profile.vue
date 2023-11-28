@@ -84,18 +84,6 @@ async function editBio() {
     successMsg.value = 'Bio updated successfully!';
   }
 }
-
-async function signOut() {
-  try {
-    loading.value = true;
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
-    loading.value = false;
-  }
-}
 </script>
 
 <template>
@@ -131,9 +119,7 @@ async function signOut() {
       <p class="text-sm text-center text-success">{{ successMsg }}</p>
     </div>
     <div class="container flex flex-col items-center justify-center gap-4 mx-auto">
-      <button class="btn btn-outline btn-secondary" :disabled="loading" @click="signOut">
-        Sign Out
-      </button>
+      <NuxtLink to="/" class="btn btn-secondary">Back to home</NuxtLink>
     </div>
   </form>
 </template>
