@@ -23,3 +23,10 @@ export interface MangaList {
     chaptercount: number;
   };
 }
+
+export interface Manga {
+  mangaid: number;
+  status: { statusname: string };
+  readchapter: number;
+  rating: number;
+}

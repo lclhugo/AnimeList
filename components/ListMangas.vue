@@ -63,7 +63,6 @@ const fetchData = async (page: number) => {
     mangas.value = data.data;
     displayedmangas.value = data.data;
     totalPages.value = data.pagination.last_visible_page;
-    console.log('data', data.data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }

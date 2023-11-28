@@ -27,7 +27,7 @@
               <option value="2">Completed</option>
               <option value="3">On Hold</option>
               <option value="4">Dropped</option>
-              <option value="6">Plan to Watch</option>
+              <option value="5">Plan to Watch</option>
             </select>
             <label for="watchedEpisodes" class="label-text-alt">Watched Episodes:</label>
             <div class="join">
@@ -157,7 +157,6 @@ const submitEditForm = async () => {
     watchedEpisodes: editedAnime.value.watchedEpisodes,
     rating: editedAnime.value.rating,
   };
-  console.log(jsonPayload);
   try {
     await useFetch(`https://localhost:7081/api/anime/list/update/${animeId}`, {
       method: 'PUT',
@@ -174,10 +173,6 @@ const submitEditForm = async () => {
     console.error(error);
   }
 };
-
-watch(editedAnime, () => {
-  console.log(editedAnime.value);
-});
 
 const handleStatusChange = () => {
   if (editedAnime.value.status === 2) {

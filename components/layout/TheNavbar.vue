@@ -29,7 +29,7 @@
               <NuxtLink to="/">Anime</NuxtLink>
               <ul class="p-2">
                 <li v-if="user">
-                  <NuxtLink :to="'/user/' + username + '/anime'">Your Anime List!</NuxtLink>
+                  <NuxtLink :to="'/user/' + username + '/anime'">Anime List!</NuxtLink>
                 </li>
                 <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
@@ -40,7 +40,7 @@
               <NuxtLink to="/">Manga</NuxtLink>
               <ul class="p-2">
                 <li v-if="user">
-                  <NuxtLink :to="'/user/' + username + '/manga'">Your Manga List!</NuxtLink>
+                  <NuxtLink :to="'/user/' + username + '/manga'">Manga List!</NuxtLink>
                 </li>
                 <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
@@ -50,7 +50,10 @@
               <NuxtLink :to="`/user/${username}`">{{ username }}</NuxtLink>
               <ul class="p-2">
                 <li>
-                  <NuxtLink :to="`/user/${username}`">Profile</NuxtLink>
+                  <NuxtLink :to="`/user/${username}`">My profile</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/profile">Edit profile</NuxtLink>
                 </li>
                 <li><button class="" @click="logout">Logout</button></li>
               </ul>
@@ -71,7 +74,7 @@
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
           <li v-if="user">
-            <NuxtLink :to="'/user/' + username + '/anime'">Your List!</NuxtLink>
+            <NuxtLink :to="'/user/' + username + '/anime'">Anime List!</NuxtLink>
           </li>
           <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
           <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
@@ -79,13 +82,13 @@
         </ul>
       </div>
       <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost">manga</label>
+        <label tabindex="0" class="btn btn-ghost">Manga</label>
         <ul
           tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
           <li v-if="user">
-            <NuxtLink :to="'/user/' + username + '/manga'">Your List!</NuxtLink>
+            <NuxtLink :to="'/user/' + username + '/manga'">Manga List!</NuxtLink>
           </li>
           <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
           <li><NuxtLink to="/manga/top">TopRatings</NuxtLink></li>
@@ -95,17 +98,6 @@
     <div class="px-4 navbar-end">
       <div v-if="user" class="hidden dropdown md:block">
         <label tabindex="0" class="btn btn-ghost">
-          <div class="avatar">
-            <div class="w-8">
-              <img
-                v-if="avatarUrl == ''"
-                src="~/assets/images/default-avatar.jpg"
-                alt="{{ username }}'s avatar"
-                class="w-full rounded-full"
-              />
-              <img v-else :src="avatarUrl" alt="avatar" class="w-full rounded-full" />
-            </div>
-          </div>
           <p class="ml-2">{{ username }}</p>
         </label>
         <ul
@@ -113,10 +105,10 @@
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
           <li>
-            <NuxtLink :to="`/user/${username}`">my profile</NuxtLink>
+            <NuxtLink :to="`/user/${username}`">My profile</NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/profile">edit profile</NuxtLink>
+            <NuxtLink to="/profile">Edit profile</NuxtLink>
           </li>
 
           <li>
@@ -139,31 +131,6 @@ const router = useRouter();
 const client = useSupabaseClient();
 const username = ref<string | undefined>(user.value?.user_metadata?.username);
 
-const UserData = ref<User>({
-  username: '',
-  avatarUrl: '',
-  bio: '',
-});
-
-const avatarUrl = ref<string>('');
-
-const fetchData = async () => {
-  try {
-    if (!username.value) {
-      return;
-    }
-    const { data } = await axios.get(`https://localhost:7081/api/user/${username.value}`);
-    UserData.value = data;
-    if (UserData.value.avatarUrl === null) {
-      avatarUrl.value = '';
-    } else {
-      avatarUrl.value = `https://xepjirqsxefnlhjmaqoh.supabase.co/storage/v1/object/public/avatars/${UserData.value.avatarUrl}`;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 watch(
   user,
   newUser => {
@@ -171,7 +138,6 @@ watch(
 
     if (newUsername !== undefined) {
       username.value = newUsername;
-      fetchData();
     }
   },
   { immediate: true },

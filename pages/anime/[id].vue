@@ -110,11 +110,6 @@
           </ul>
         </div>
       </div>
-      <!-- {{ charactersData }} -->
-      <div v-for="character in charactersData.data" :key="character.mal_id">
-        <h2>{{ character.character.name }}</h2>
-        <img :src="character.character.images.webp.image_url" />
-      </div>
     </div>
     <div v-else>
       <h1>There is no anime with this id</h1>
@@ -137,11 +132,6 @@ const {
 
 const { data: anime } = await useFetch(`https://api.jikan.moe/v4/anime/${route.params.id}/full`);
 const animeData = ref(anime);
-
-const { data: characters } = await useFetch(
-  `https://api.jikan.moe/v4/anime/${route.params.id}/characters`,
-);
-const charactersData = ref(characters);
 
 const isInListResponse = await useFetch(
   `https://localhost:7081/api/anime/list/get/user/${route.params.id}`,
@@ -185,7 +175,6 @@ const handleAnimeUpdated = () => {
 
 const handleAnimeDeleted = () => {
   try {
-    console.log('Anime deleted');
     setFeedback('Anime deleted successfully', true);
     setTimeout(() => {
       window.location.reload();

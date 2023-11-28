@@ -27,7 +27,7 @@
               <option value="2">Completed</option>
               <option value="3">On Hold</option>
               <option value="4">Dropped</option>
-              <option value="6">Plan to Watch</option>
+              <option value="5">Plan to Read</option>
             </select>
             <label for="readchapters" class="label-text-alt">Read Chapters:</label>
             <div class="join">
@@ -157,7 +157,6 @@ const submitEditForm = async () => {
     readchapters: editedManga.value.readchapters,
     rating: editedManga.value.rating,
   };
-  console.log(jsonPayload);
   try {
     await useFetch(`https://localhost:7081/api/manga/list/update/${mangaId}`, {
       method: 'PUT',
@@ -175,10 +174,6 @@ const submitEditForm = async () => {
     console.error(error);
   }
 };
-
-watch(editedManga, () => {
-  console.log(editedManga.value);
-});
 
 const handleStatusChange = () => {
   if (editedManga.value.status === 2) {

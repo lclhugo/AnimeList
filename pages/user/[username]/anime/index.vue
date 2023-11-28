@@ -58,15 +58,12 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import type { Anime } from '~/types/animes';
 
-interface Anime {
-  animeid: number;
-  status: { statusname: string };
-  watchedepisodes: number;
-  rating: number;
-}
+definePageMeta({
+  middleware: ['check-if-user-exists'],
+});
 
 export default {
   setup: function () {
@@ -80,7 +77,6 @@ export default {
       try {
         const { data } = await axios.get(`https://localhost:7081/api/anime/list/get/${username}`);
         animeData.value = data;
-        console.log('data', data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
