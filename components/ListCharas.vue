@@ -1,24 +1,20 @@
 <template>
   <NuxtLayout>
-    <div v-if="mangas.length === 0">No data was found</div>
-    <div v-else>
-      <h1
-        class="text-4xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
-      >
-        {{ title }}
-      </h1>
+    <div v-if="animes.length === 0">No data was found</div>
+    <div v-else class="container mx-auto">
+      <h1 class="mb-8 text-4xl font-bold text-center">{{ title }}</h1>
       <div
         class="flex flex-wrap justify-around mx-auto gap-y-16 md:max-w-7xl md:justify-center md:gap-x-4"
       >
-        <mangaCard
-          v-for="manga in displayedmangas"
-          :id="manga.mal_id"
-          :key="manga.mal_id"
-          :name="manga.title"
-          :image="manga.images.jpg.large_image_url"
+        <AnimeCard
+          v-for="anime in displayedAnimes"
+          :id="anime.mal_id"
+          :key="anime.mal_id"
+          :name="anime.title"
+          :image="anime.images.jpg.large_image_url"
         />
       </div>
-      <div v-show="totalPages > 1" class="flex justify-between my-8 mt-24">
+      <div class="flex justify-between my-8 mt-24">
         <div class="mx-auto join">
           <button class="join-item btn" :disabled="currentPage === 1" @click="prevPage">«</button>
           <button class="join-item btn">Page {{ currentPage }}</button>
@@ -34,7 +30,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import type { DisplayedManga } from '~/types/mangas';
+import type { DisplayedAnime } from '~/types/animes';
 
 definePageMeta({
   layout: 'base',
@@ -43,16 +39,16 @@ definePageMeta({
 const { url, title } = defineProps({
   url: {
     type: String,
-    default: 'https://api.jikan.moe/v4/top/manga',
+    default: 'https://api.jikan.moe/v4/top/anime',
   },
   title: {
     type: String,
-    default: 'Top manga',
+    default: 'Anime',
   },
 });
 
-const displayedmangas = ref([] as DisplayedManga[]);
-const mangas = ref([]);
+const displayedAnimes = ref([] as DisplayedAnime[]);
+const animes = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 
@@ -60,8 +56,8 @@ const fetchData = async (page: number) => {
   try {
     const response = await axios.get(`${url}?page=${page}`);
     const { data } = response;
-    mangas.value = data.data;
-    displayedmangas.value = data.data;
+    animes.value = data.data;
+    displayedAnimes.value = data.data;
     totalPages.value = data.pagination.last_visible_page;
   } catch (error) {
     console.error('Error fetching data:', error);

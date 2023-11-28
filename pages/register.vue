@@ -90,11 +90,9 @@ watchEffect(() => {
   }
 });
 
-const checkUsernameAvailability = async username => {
+const checkUsernameAvailability = async (username: string) => {
   try {
-    // Make a request to your API endpoint
-    const response = await fetch(`https://localhost:7081/api/user/username-check/${username}`);
-    console.log(response);
+    const response = await fetch(`https://localhost:7081/api/user/check-username/${username}`);
 
     if (response.ok) {
       return true;
@@ -109,6 +107,9 @@ const checkUsernameAvailability = async username => {
 };
 
 const signUp = async () => {
+  errorMsg.value = '';
+  successMsg.value = '';
+
   if (password.value !== confirmPassword.value) {
     errorMsg.value = 'Passwords do not match';
     return;
@@ -137,7 +138,7 @@ const signUp = async () => {
     return;
   }
 
-  const { data, error } = await client.auth.signUp({
+  const { error } = await client.auth.signUp({
     email: email.value,
     password: password.value,
     options: {
@@ -150,7 +151,8 @@ const signUp = async () => {
     const { message } = error;
     errorMsg.value = message;
   } else {
-    successMsg.value = 'You are now registered! You can now login.';
+    errorMsg.value = '';
+    successMsg.value = 'You are now registered!';
   }
 };
 </script>

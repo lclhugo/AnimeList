@@ -2,8 +2,14 @@
   <NuxtLayout>
     <div v-if="animes.length === 0">No data was found</div>
     <div v-else>
-      <h1 class="mb-8 text-4xl font-bold">{{ title }}</h1>
-      <div class="flex flex-wrap justify-center w-11/12 gap-2 mx-auto md:gap-0 md:justify-around">
+      <h1
+        class="text-4xl text-center font-extrabold mb-8 text-transparent title bg-clip-text bg-gradient-to-r from-primary from-10 via-50% to-secondary to-100% w-fit mx-auto"
+      >
+        {{ title }}
+      </h1>
+      <div
+        class="flex flex-wrap justify-around mx-auto gap-y-16 md:max-w-7xl md:justify-center md:gap-x-4"
+      >
         <AnimeCard
           v-for="anime in displayedAnimes"
           :id="anime.mal_id"
@@ -12,7 +18,7 @@
           :image="anime.images.jpg.large_image_url"
         />
       </div>
-      <div class="flex justify-between my-8">
+      <div v-show="totalPages > 1" class="flex justify-between my-8 mt-24">
         <div class="mx-auto join">
           <button class="join-item btn" :disabled="currentPage === 1" @click="prevPage">«</button>
           <button class="join-item btn">Page {{ currentPage }}</button>
@@ -28,6 +34,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import type { DisplayedAnime } from '~/types/animes';
 
 definePageMeta({
   layout: 'base',
@@ -44,7 +51,7 @@ const { url, title } = defineProps({
   },
 });
 
-const displayedAnimes = ref([]);
+const displayedAnimes = ref([] as DisplayedAnime[]);
 const animes = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
@@ -56,7 +63,6 @@ const fetchData = async (page: number) => {
     animes.value = data.data;
     displayedAnimes.value = data.data;
     totalPages.value = data.pagination.last_visible_page;
-    console.log('data', data.data);
   } catch (error) {
     console.error('Error fetching data:', error);
   }

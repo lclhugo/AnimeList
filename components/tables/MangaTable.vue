@@ -7,20 +7,19 @@
             <th class="hidden md:block">Poster</th>
             <th class="text-left">Title</th>
             <th>Status</th>
-            <th>Type</th>
-            <th>Episodes</th>
+            <th>Chapters</th>
             <th>Rating /10</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="anime in animeData" :key="anime.animeid" v-motion-fade-visible>
+          <tr v-for="manga in mangaData" :key="manga.mangaid" v-motion-fade-visible>
             <td class="hidden md:block">
-              <NuxtLink v-if="anime.animeid" :to="'/anime/' + anime.animeid">
+              <NuxtLink v-if="manga.mangaid" :to="'/manga/' + manga.mangaid">
                 <div class="avatar">
                   <div class="w-20 md:w-30">
                     <img
-                      :src="anime.animeInfo.image"
-                      alt="Anime Poster"
+                      :src="manga.mangaInfo.image"
+                      alt="Manga Poster"
                       class="transition-opacity duration-300 hover:opacity-80"
                     />
                   </div>
@@ -28,22 +27,22 @@
               </NuxtLink>
             </td>
             <td class="text-left">
-              <NuxtLink :to="'/anime/' + anime.animeid">
-                {{ anime.animeInfo.title }}
+              <NuxtLink :to="'/manga/' + manga.mangaid">
+                {{ manga.mangaInfo.title }}
               </NuxtLink>
             </td>
-            <td>{{ anime.status.statusname }}</td>
-            <td>{{ anime.animeInfo.type }}</td>
-            <td>
-              {{ anime.watchedepisodes }}/{{ anime.animeInfo.episodecount }}
+            <td>{{ manga.status.statusname }}</td>
+            <td v-if="manga.mangaInfo.chaptercount !== null">
+              {{ manga.readchapters }}/{{ manga.mangaInfo.chaptercount }}
 
               <progress
                 class="hidden mt-2 md:block progress progress-primary"
-                :value="anime.watchedepisodes"
-                :max="anime.animeInfo.episodecount"
+                :value="manga.readchapters"
+                :max="manga.mangaInfo.chaptercount"
               ></progress>
             </td>
-            <td v-if="anime.rating !== 0">{{ anime.rating }}</td>
+            <td v-else>{{ manga.readchapters }}</td>
+            <td v-if="manga.rating !== 0">{{ manga.rating }}</td>
             <td v-else>Not rated</td>
           </tr>
         </tbody>
@@ -53,21 +52,12 @@
 </template>
 
 <script setup lang="ts">
-import type { AnimeList } from '~/types/animes';
+import type { MangaList } from '~/types/mangas';
 const route = useRoute();
-const user = ref(false);
-
-const userClient = useSupabaseUser();
-
-if (userClient.value?.user_metadata?.username === route.params.username) {
-  user.value = true;
-} else {
-  user.value = false;
-}
 
 const props = defineProps({
-  animeData: {
-    type: Array as () => AnimeList[],
+  mangaData: {
+    type: Array as () => MangaList[],
     required: true,
   },
 });

@@ -28,6 +28,9 @@
             <li>
               <NuxtLink to="/">Anime</NuxtLink>
               <ul class="p-2">
+                <li v-if="user">
+                  <NuxtLink :to="'/user/' + username + '/anime'">Anime List!</NuxtLink>
+                </li>
                 <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
                 <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
@@ -36,6 +39,9 @@
             <li>
               <NuxtLink to="/">Manga</NuxtLink>
               <ul class="p-2">
+                <li v-if="user">
+                  <NuxtLink :to="'/user/' + username + '/manga'">Manga List!</NuxtLink>
+                </li>
                 <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
                 <li><NuxtLink to="/manga/top">Top Ratings</NuxtLink></li>
               </ul>
@@ -44,7 +50,10 @@
               <NuxtLink :to="`/user/${username}`">{{ username }}</NuxtLink>
               <ul class="p-2">
                 <li>
-                  <NuxtLink :to="`/user/${username}`">Profile</NuxtLink>
+                  <NuxtLink :to="`/user/${username}`">My profile</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/profile">Edit profile</NuxtLink>
                 </li>
                 <li><button class="" @click="logout">Logout</button></li>
               </ul>
@@ -64,43 +73,44 @@
           tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
+          <li v-if="user">
+            <NuxtLink :to="'/user/' + username + '/anime'">Anime List!</NuxtLink>
+          </li>
           <li><NuxtLink to="/anime/search">Browse</NuxtLink></li>
           <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
           <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
         </ul>
       </div>
       <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost">manga</label>
+        <label tabindex="0" class="btn btn-ghost">Manga</label>
         <ul
           tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
+          <li v-if="user">
+            <NuxtLink :to="'/user/' + username + '/manga'">Manga List!</NuxtLink>
+          </li>
           <li><NuxtLink to="/manga/search">Browse</NuxtLink></li>
           <li><NuxtLink to="/manga/top">TopRatings</NuxtLink></li>
-        </ul>
-      </div>
-      <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost">Anime</label>
-        <ul
-          tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
-        >
-          <li><NuxtLink to="/anime/search">Search</NuxtLink></li>
-          <li><NuxtLink to="/anime/top">Top Ratings</NuxtLink></li>
-          <li><NuxtLink to="/anime/current-season">Airing</NuxtLink></li>
         </ul>
       </div>
     </div>
     <div class="px-4 navbar-end">
       <div v-if="user" class="hidden dropdown md:block">
-        <label tabindex="0" class="btn btn-ghost">{{ username }}</label>
+        <label tabindex="0" class="btn btn-ghost">
+          <p class="ml-2">{{ username }}</p>
+        </label>
         <ul
           tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32"
         >
           <li>
-            <NuxtLink :to="`/user/${username}`">Profile</NuxtLink>
+            <NuxtLink :to="`/user/${username}`">My profile</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/profile">Edit profile</NuxtLink>
+          </li>
+
           <li>
             <button @click="logout">Logout</button>
           </li>
@@ -113,16 +123,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import axios from 'axios';
+import type { User } from '~/types/user';
+
 const user = useSupabaseUser();
 const router = useRouter();
 const client = useSupabaseClient();
-const username = ref(user.value?.user_metadata?.username);
+const username = ref<string | undefined>(user.value?.user_metadata?.username);
 
 watch(
   user,
   newUser => {
-    username.value = newUser?.user_metadata?.username;
+    const newUsername = newUser?.user_metadata?.username;
+
+    if (newUsername !== undefined) {
+      username.value = newUsername;
+    }
   },
   { immediate: true },
 );

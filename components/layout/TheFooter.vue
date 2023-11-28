@@ -1,7 +1,7 @@
 <template>
   <footer
     v-motion-slide-visible-bottom
-    class="p-10 border-t-2 footer footer-center bg-base-100 border-neutral"
+    class="p-10 mt-8 border-t-2 footer footer-center bg-base-100 border-neutral"
   >
     <aside>
       <HomeButton />
