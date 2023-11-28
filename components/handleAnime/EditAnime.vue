@@ -27,7 +27,7 @@
               <option value="2">Completed</option>
               <option value="3">On Hold</option>
               <option value="4">Dropped</option>
-              <option value="6">Plan to Watch</option>
+              <option value="5">Plan to Watch</option>
             </select>
             <label for="watchedEpisodes" class="label-text-alt">Watched Episodes:</label>
             <div class="join">

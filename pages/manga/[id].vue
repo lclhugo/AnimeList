@@ -87,11 +87,6 @@
           </ul>
         </div>
       </div>
-      <!-- {{ charactersData }} -->
-      <div v-for="character in charactersData.data" :key="character.mal_id">
-        <h2>{{ character.character.name }}</h2>
-        <img :src="character.character.images.webp.image_url" />
-      </div>
     </div>
     <div v-else>
       <h1>There is no manga with this id</h1>
@@ -115,11 +110,6 @@ const {
 
 const { data: manga } = await useFetch(`https://api.jikan.moe/v4/manga/${route.params.id}/full`);
 const mangaData = ref(manga);
-
-const { data: characters } = await useFetch(
-  `https://api.jikan.moe/v4/manga/${route.params.id}/characters`,
-);
-const charactersData = ref(characters);
 
 const isInListResponse = await useFetch(
   `https://localhost:7081/api/manga/list/get/user/${route.params.id}`,

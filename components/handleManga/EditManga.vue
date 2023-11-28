@@ -27,7 +27,7 @@
               <option value="2">Completed</option>
               <option value="3">On Hold</option>
               <option value="4">Dropped</option>
-              <option value="6">Plan to Watch</option>
+              <option value="5">Plan to Read</option>
             </select>
             <label for="readchapters" class="label-text-alt">Read Chapters:</label>
             <div class="join">

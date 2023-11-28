@@ -23,3 +23,10 @@ export interface AnimeList {
     episodecount: number;
   };
 }
+
+export interface Anime {
+  animeid: number;
+  status: { statusname: string };
+  watchedepisodes: number;
+  rating: number;
+}
