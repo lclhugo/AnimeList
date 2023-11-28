@@ -14,7 +14,7 @@ export function useGenres() {
   };
 
   const getGenreNameById = (genreId: string) => {
-    const parsedGenreId = parseInt(genreId); // Assuming base 10
+    const parsedGenreId = parseInt(genreId);
     const genre = genres.value.find(gen => gen.mal_id === parsedGenreId);
     return genre ? genre.name : '';
   };

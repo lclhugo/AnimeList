@@ -131,12 +131,12 @@ const signUp = async () => {
     return;
   }
 
-  // const isUsernameAvailable = await checkUsernameAvailability(username.value);
+  const isUsernameAvailable = await checkUsernameAvailability(username.value);
 
-  // if (!isUsernameAvailable) {
-  //   errorMsg.value = 'Username is not available';
-  //   return;
-  // }
+  if (!isUsernameAvailable) {
+    errorMsg.value = 'Username is not available';
+    return;
+  }
 
   const { error } = await client.auth.signUp({
     email: email.value,
@@ -152,7 +152,7 @@ const signUp = async () => {
     errorMsg.value = message;
   } else {
     errorMsg.value = '';
-    successMsg.value = 'You are now registered! You can now login.';
+    successMsg.value = 'You are now registered!';
   }
 };
 </script>

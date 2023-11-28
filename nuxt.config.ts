@@ -1,6 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
+  app: {
+    head: {
+      title: 'AnimeList',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+        {
+          content: 'AnimeList is a social networking service for anime and manga fans.',
+        },
+      ],
+    },
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
