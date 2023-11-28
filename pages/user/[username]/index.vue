@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-8 gap-8 mt-8">
+    <div class="grid grid-cols-8 gap-8 mt-8 container mx-auto">
       <div class="col-span-8 w-full flex flex-col md:col-span-3 lg:col-span-2 gap-12">
         <div class="flex flex-col items-center justify-center mx-auto md:items-end md:flex-row">
           <img

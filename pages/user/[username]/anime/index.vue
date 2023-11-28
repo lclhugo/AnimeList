@@ -58,7 +58,6 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import type { Anime } from '~/types/animes';
 
